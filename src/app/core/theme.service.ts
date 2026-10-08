@@ -6,12 +6,12 @@ export type Motion = 'full' | 'reduced';
 
 const THEME_KEY = 'portfolio.theme';
 const MOTION_KEY = 'portfolio.motion';
-const THEMES: Theme[] = ['light', 'dark', 'contrast'];
+const THEMES: Theme[] = ['dark', 'light', 'contrast'];
 const THEME_COLOR: Record<Theme, string> = { light: '#f1f4f2', dark: '#0f1e17', contrast: '#000000' };
 
 /**
  * Accessibility preferences, stored per visitor.
- * First visit follows the OS: high contrast, dark mode and reduced motion.
+ * Dark is the default; a first visit still honours OS high contrast and reduced motion.
  */
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
@@ -47,7 +47,7 @@ export class ThemeService {
     const saved = this.read(THEME_KEY);
     if (THEMES.includes(saved as Theme)) return saved as Theme;
     if (matchMedia('(prefers-contrast: more)').matches) return 'contrast';
-    return matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    return 'dark';
   }
 
   private initialMotion(): Motion {

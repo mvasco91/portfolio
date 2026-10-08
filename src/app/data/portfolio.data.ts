@@ -50,6 +50,16 @@ export const UI = {
       fr: 'Disponible pour des postes de responsable front-end et de développeur front-end senior au Canada.',
       es: 'Disponible para roles de líder front-end y desarrollador front-end senior en Canadá.',
     },
+    hint: {
+      en: 'Move your cursor through the name, then scroll. The particles follow the story.',
+      fr: 'Passez le curseur sur le nom, puis faites défiler. Les particules suivent le récit.',
+      es: 'Pasa el cursor por el nombre y luego haz scroll. Las partículas siguen la historia.',
+    },
+    hintTouch: {
+      en: 'Touch the name, then scroll. The particles follow the story.',
+      fr: 'Touchez le nom, puis faites défiler. Les particules suivent le récit.',
+      es: 'Toca el nombre y luego haz scroll. Las partículas siguen la historia.',
+    },
     email: { en: 'Email me', fr: 'Écrivez-moi', es: 'Escríbeme' },
     resume: { en: 'Download resume (PDF)', fr: 'Télécharger mon CV (PDF, anglais)', es: 'Descargar hoja de vida (PDF, inglés)' },
   },
@@ -80,6 +90,13 @@ export const UI = {
     education: { en: 'Education', fr: 'Formation', es: 'Educación' },
     languages: { en: 'Languages', fr: 'Langues', es: 'Idiomas' },
   },
+  quote: {
+    text: {
+      en: 'Every day I try to learn something new, because a day without learning something new is simply a day lost.',
+      fr: "Chaque jour, j'essaie d'apprendre quelque chose de nouveau, parce qu'une journée sans rien apprendre est tout simplement une journée perdue.",
+      es: 'Todos los días trato de aprender algo nuevo, porque un día sin aprender algo nuevo es simplemente un día perdido.',
+    },
+  },
   contact: {
     title: { en: "Let's talk.", fr: 'Discutons.', es: 'Hablemos.' },
     body: {
@@ -92,9 +109,9 @@ export const UI = {
   },
   footer: {
     built: {
-      en: 'Built with Angular signals. The panel in the corner shows them working.',
-      fr: "Fait avec les signals d'Angular. Le panneau dans le coin les montre en action.",
-      es: 'Hecho con signals de Angular. El panel de la esquina los muestra en acción.',
+      en: 'Built with Angular signals and Three.js. The panel in the corner shows the signals at work.',
+      fr: "Fait avec les signals d'Angular et Three.js. Le panneau dans le coin montre les signals en action.",
+      es: 'Hecho con signals de Angular y Three.js. El panel de la esquina muestra los signals en acción.',
     },
     source: { en: 'View the source', fr: 'Voir le code source', es: 'Ver el código fuente' },
   },
@@ -113,9 +130,9 @@ export const UI = {
     toggle: same('Signals'),
     title: { en: 'Live signal graph', fr: 'Graphe de signals en direct', es: 'Grafo de signals en vivo' },
     intro: {
-      en: 'This is the real state of this page. Change the language, the theme or open a case study and watch what updates.',
-      fr: "Voici l'état réel de cette page. Changez la langue, le thème ou ouvrez une étude de cas pour voir ce qui se met à jour.",
-      es: 'Este es el estado real de esta página. Cambia el idioma, el tema o abre un caso y mira qué se actualiza.',
+      en: 'This is the real state of this page. Scroll, change the language or the theme, or open a case study, and watch what updates. The particles are driven by these signals too.',
+      fr: "Voici l'état réel de cette page. Faites défiler, changez la langue ou le thème, ou ouvrez une étude de cas pour voir ce qui se met à jour. Les particules sont aussi pilotées par ces signals.",
+      es: 'Este es el estado real de esta página. Haz scroll, cambia el idioma o el tema, o abre un caso, y mira qué se actualiza. Las partículas también dependen de estos signals.',
     },
     log: { en: 'Recent updates', fr: 'Mises à jour récentes', es: 'Actualizaciones recientes' },
     empty: {

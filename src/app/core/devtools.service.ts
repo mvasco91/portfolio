@@ -40,13 +40,16 @@ export class DevtoolsService {
     { id: 'lang', kind: 'signal', deps: [], value: () => fmt(this.i18n.lang()) },
     { id: 'theme', kind: 'signal', deps: [], value: () => fmt(this.theme.theme()) },
     { id: 'motion', kind: 'signal', deps: [], value: () => fmt(this.theme.motion()) },
+    { id: 'section', kind: 'signal', deps: [], value: () => fmt(this.page.section()) },
     { id: 'activeCase', kind: 'signal', deps: [], value: () => fmt(this.page.activeCase()) },
+    { id: 'shape', kind: 'computed', deps: ['section'], value: () => fmt(this.page.shape()) },
     { id: 'title', kind: 'computed', deps: ['lang'], value: () => fmt(this.i18n.title()) },
     { id: 'caseView', kind: 'computed', deps: ['activeCase', 'lang'], value: () => fmt(this.page.caseView()) },
+    { id: 'particles.morph', kind: 'effect', deps: ['shape'], value: () => this.page.shape() },
+    { id: 'particles.palette', kind: 'effect', deps: ['theme'], value: () => this.theme.theme() },
     { id: 'html[lang]', kind: 'effect', deps: ['lang'], value: () => HTML_LANG[this.i18n.lang()] },
     { id: 'document.title', kind: 'effect', deps: ['title'], value: () => 'updated' },
     { id: 'html[data-theme]', kind: 'effect', deps: ['theme'], value: () => this.theme.theme() },
-    { id: 'html[data-motion]', kind: 'effect', deps: ['motion'], value: () => this.theme.motion() },
   ];
 
   readonly log = signal<LogEntry[]>([]);
@@ -59,6 +62,7 @@ export class DevtoolsService {
     this.watch('theme', () => this.theme.theme());
     this.watch('motion', () => this.theme.motion());
     this.watch('activeCase', () => this.page.activeCase());
+    this.watch('section', () => this.page.section());
   }
 
   dependents(id: string): string[] {

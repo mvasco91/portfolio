@@ -1,7 +1,8 @@
-import { Component, HostListener, inject } from '@angular/core';
+import { Component, DestroyRef, HostListener, afterNextRender, inject } from '@angular/core';
 import { DevtoolsService } from './core/devtools.service';
 import { I18nService } from './core/i18n.service';
-import { PageStateService } from './core/page-state.service';
+import { PageStateService, SECTIONS, SectionId } from './core/page-state.service';
+import { ParticleCanvasComponent } from './particles/particle-canvas.component';
 import { ThemeService } from './core/theme.service';
 import { CasesComponent } from './sections/cases.component';
 import { ContactComponent } from './sections/contact.component';
@@ -10,11 +11,13 @@ import { HeaderComponent } from './sections/header.component';
 import { HeroComponent } from './sections/hero.component';
 import { InspectorComponent } from './sections/inspector.component';
 import { SkillsComponent } from './sections/skills.component';
+import { QuoteComponent } from './sections/quote.component';
 
 @Component({
   selector: 'app-root',
-  imports: [HeaderComponent, HeroComponent, CasesComponent, ExperienceComponent, SkillsComponent, ContactComponent, InspectorComponent],
+  imports: [ParticleCanvasComponent, HeaderComponent, HeroComponent, CasesComponent, ExperienceComponent, SkillsComponent, QuoteComponent, ContactComponent, InspectorComponent],
   template: `
+    <app-particle-canvas />
     <a class="skip-link" href="#work">Skip to content</a>
     <app-header />
     <main>
@@ -22,6 +25,7 @@ import { SkillsComponent } from './sections/skills.component';
       <app-cases />
       <app-experience />
       <app-skills />
+      <app-quote />
       <app-contact />
     </main>
     <app-inspector />
@@ -33,6 +37,26 @@ export class App {
   private readonly page = inject(PageStateService);
   /** Created at startup so the graph records changes from the first interaction. */
   private readonly devtools = inject(DevtoolsService);
+
+  constructor() {
+    const destroyRef = inject(DestroyRef);
+    afterNextRender(() => {
+      // The section crossing the middle of the viewport becomes the active one.
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) this.page.section.set(entry.target.id as SectionId);
+          }
+        },
+        { rootMargin: '-50% 0px -50% 0px' },
+      );
+      for (const id of SECTIONS) {
+        const el = document.getElementById(id);
+        if (el) observer.observe(el);
+      }
+      destroyRef.onDestroy(() => observer.disconnect());
+    });
+  }
 
   /** Single-key shortcuts: L language, T theme, S signal inspector. */
   @HostListener('document:keydown', ['$event'])

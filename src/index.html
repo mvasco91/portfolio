@@ -6,7 +6,7 @@
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Mauricio Vasco Vélez, Senior Front-End Developer and hands-on Tech Lead (Angular) based in Toronto. 10 years building web and mobile apps for enterprise SaaS, banking and insurance.">
-  <meta name="theme-color" content="#f1f4f2">
+  <meta name="theme-color" content="#0f1e17">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Mauricio Vasco | Senior Front-End Developer &amp; Tech Lead">
   <meta property="og:description" content="Angular apps for banking, insurance and enterprise SaaS. English, French and Spanish.">
@@ -16,7 +16,7 @@
     (function () {
       var r = document.documentElement, t, m;
       try { t = localStorage.getItem('portfolio.theme'); m = localStorage.getItem('portfolio.motion'); } catch (e) {}
-      r.dataset.theme = t || (matchMedia('(prefers-contrast: more)').matches ? 'contrast' : matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      r.dataset.theme = t || (matchMedia('(prefers-contrast: more)').matches ? 'contrast' : 'dark');
       r.dataset.motion = m || (matchMedia('(prefers-reduced-motion: reduce)').matches ? 'reduced' : 'full');
     })();
   </script>
