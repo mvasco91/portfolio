@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+  <meta charset="utf-8">
+  <title>Mauricio Vasco | Senior Front-End Developer &amp; Tech Lead</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Mauricio Vasco Vélez, Senior Front-End Developer and hands-on Tech Lead (Angular) based in Toronto. 10 years building web and mobile apps for enterprise SaaS, banking and insurance.">
+  <meta name="theme-color" content="#090d0b">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Mauricio Vasco | Senior Front-End Developer &amp; Tech Lead">
+  <meta property="og:description" content="Angular apps for banking, insurance and enterprise SaaS. English, French and Spanish.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <script>
+    /* Apply saved accessibility settings before first paint (mirrors ThemeService). */
+    (function () {
+      var r = document.documentElement, t, m;
+      try { t = localStorage.getItem('portfolio.theme'); m = localStorage.getItem('portfolio.motion'); } catch (e) {}
+      r.dataset.theme = t || (matchMedia('(prefers-contrast: more)').matches ? 'contrast' : 'dark');
+      r.dataset.motion = m || (matchMedia('(prefers-reduced-motion: reduce)').matches ? 'reduced' : 'full');
+    })();
+  </script>
+</head>
+<body>
+  <app-root></app-root>
+</body>
+</html>
