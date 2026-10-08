@@ -52,6 +52,12 @@
               }
             ],
             "styles": [
+              "node_modules/@fontsource-variable/source-serif-4/opsz.css",
+              "node_modules/@fontsource/ibm-plex-sans/latin-400.css",
+              "node_modules/@fontsource/ibm-plex-sans/latin-500.css",
+              "node_modules/@fontsource/ibm-plex-sans/latin-600.css",
+              "node_modules/@fontsource/ibm-plex-mono/latin-400.css",
+              "node_modules/@fontsource/ibm-plex-mono/latin-500.css",
               "src/styles.scss"
             ]
           },
