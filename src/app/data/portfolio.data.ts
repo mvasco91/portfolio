@@ -50,16 +50,6 @@ export const UI = {
       fr: 'Disponible pour des postes de responsable front-end et de développeur front-end senior au Canada.',
       es: 'Disponible para roles de líder front-end y desarrollador front-end senior en Canadá.',
     },
-    hint: {
-      en: 'Move your cursor through the name, then scroll. The particles follow the story.',
-      fr: 'Passez le curseur sur le nom, puis faites défiler. Les particules suivent le récit.',
-      es: 'Pasa el cursor por el nombre y luego haz scroll. Las partículas siguen la historia.',
-    },
-    hintTouch: {
-      en: 'Touch the name, then scroll. The particles follow the story.',
-      fr: 'Touchez le nom, puis faites défiler. Les particules suivent le récit.',
-      es: 'Toca el nombre y luego haz scroll. Las partículas siguen la historia.',
-    },
     email: { en: 'Email me', fr: 'Écrivez-moi', es: 'Escríbeme' },
     resume: { en: 'Download resume (PDF)', fr: 'Télécharger mon CV (PDF, anglais)', es: 'Descargar hoja de vida (PDF, inglés)' },
   },

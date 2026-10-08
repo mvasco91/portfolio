@@ -7,7 +7,7 @@ export type SectionId = 'top' | 'work' | 'experience' | 'skills' | 'learning' | 
 export const SECTIONS: SectionId[] = ['top', 'work', 'experience', 'skills', 'learning', 'contact'];
 
 const SHAPE_FOR: Record<SectionId, ShapeName> = {
-  top: 'name',
+  top: 'scatter',
   work: 'network',
   experience: 'shield',
   skills: 'phone',

@@ -45,9 +45,11 @@ export class ParticleCanvasComponent {
       this.field?.setAnimate(animate);
     });
     effect(() => {
-      // Behind body text on narrow screens, the field steps back so text stays readable.
-      const behindText = this.page.section() !== 'top' && window.innerWidth < 1080;
-      this.field?.setOpacity(behindText ? 0.28 : 1);
+      // Hidden on the hero; the field appears with the case studies. Behind body text
+      // on narrow screens it steps back so the text stays readable.
+      const section = this.page.section();
+      const opacity = section === 'top' ? 0 : window.innerWidth < 1080 ? 0.28 : 1;
+      this.field?.setOpacity(opacity);
     });
   }
 
@@ -58,19 +60,15 @@ export class ParticleCanvasComponent {
       this.page.webgl.set(false);
       return;
     }
-    try {
-      await document.fonts.load('600 100px "IBM Plex Sans"');
-    } catch {
-      /* fall back to the system font */
-    }
-
     // Three.js is loaded lazily so the text of the page never waits for WebGL.
     const { ParticleField: Field } = await import('./particle-field');
-    const field = new Field(canvas, '"IBM Plex Sans", system-ui, sans-serif', this.theme.motion() === 'full');
+    const field = new Field(canvas, this.theme.motion() === 'full');
     this.field = field;
     field.resize(window.innerWidth, window.innerHeight);
     field.setPalette(PALETTES[this.theme.theme()]);
     field.setShape(this.page.shape());
+    const section = this.page.section();
+    field.setOpacity(section === 'top' ? 0 : window.innerWidth < 1080 ? 0.28 : 1);
     field.play();
 
     let resizeTimer = 0;

@@ -4,7 +4,7 @@
  * so the field can morph between any two shapes particle by particle.
  */
 
-export type ShapeName = 'name' | 'network' | 'shield' | 'phone' | 'spiral' | 'globe';
+export type ShapeName = 'scatter' | 'network' | 'shield' | 'phone' | 'spiral' | 'globe';
 
 export interface Frame {
   /** Visible width and height of the z = 0 plane, in world units. */
@@ -12,7 +12,7 @@ export interface Frame {
   height: number;
   /** Below ~1080px the layout stacks, so shapes are centred behind the text instead of pushed right. */
   narrow: boolean;
-  /** Phones: the name breaks onto two lines. */
+  /** Phones. */
   compact: boolean;
 }
 
@@ -65,45 +65,16 @@ function shapeSize(frame: Frame): number {
   return frame.narrow ? Math.min(frame.width * 0.78, frame.height * 0.42) : Math.min(frame.width * 0.3, frame.height * 0.62);
 }
 
-/* -- Name ------------------------------------------------------------------ */
+/* -- Scatter: a loose cloud in depth, invisible on the hero ----------------- */
 
-function nameShape(count: number, frame: Frame, fontFamily: string): Pt[] {
-  const lines = frame.compact ? ['MAURICIO', 'VASCO'] : ['MAURICIO VASCO'];
-  const W = 1400;
-  const H = frame.compact ? 640 : 260;
-  const canvas = document.createElement('canvas');
-  canvas.width = W;
-  canvas.height = H;
-  const ctx = canvas.getContext('2d', { willReadFrequently: true })!;
-  ctx.fillStyle = '#fff';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  let size = frame.compact ? 300 : 210;
-  ctx.font = `600 ${size}px ${fontFamily}`;
-  const widest = Math.max(...lines.map((l) => ctx.measureText(l).width));
-  size = Math.floor(size * Math.min(1, (W * 0.96) / widest));
-  ctx.font = `600 ${size}px ${fontFamily}`;
-  const lineH = size * 1.0;
-  lines.forEach((l, i) => ctx.fillText(l, W / 2, H / 2 + (i - (lines.length - 1) / 2) * lineH));
-
-  const data = ctx.getImageData(0, 0, W, H).data;
-  const filled: Pt[] = [];
-  const step = 3;
-  for (let y = 0; y < H; y += step) {
-    for (let x = 0; x < W; x += step) {
-      if (data[(y * W + x) * 4 + 3] > 128) filled.push([x, y]);
-    }
-  }
-  // Fit the text into the upper part of the viewport.
-  const targetW = frame.width * (frame.compact ? 0.9 : 0.86);
-  const scale = targetW / W;
-  const yOffset = frame.compact ? frame.height * 0.22 : frame.height * 0.17;
-  const pts: Pt[] = [];
+function scatterBuffer(count: number, frame: Frame): Float32Array {
+  const buf = new Float32Array(count * 3);
   for (let i = 0; i < count; i++) {
-    const p = filled[Math.floor(Math.random() * filled.length)] ?? [W / 2, H / 2];
-    pts.push([(p[0] - W / 2 + rand(-1.5, 1.5)) * scale, (H / 2 - p[1] + rand(-1.5, 1.5)) * scale + yOffset]);
+    buf[i * 3] = rand(-0.8, 0.8) * frame.width;
+    buf[i * 3 + 1] = rand(-0.9, 0.9) * frame.height;
+    buf[i * 3 + 2] = rand(-14, 4);
   }
-  return pts;
+  return buf;
 }
 
 /* -- Network: nodes and edges, like a component or signal graph ------------- */
@@ -244,10 +215,10 @@ function spiralShape(count: number, frame: Frame): Pt[] {
   return pts;
 }
 
-export function buildShape(name: ShapeName, count: number, frame: Frame, fontFamily: string): Float32Array {
+export function buildShape(name: ShapeName, count: number, frame: Frame): Float32Array {
   switch (name) {
-    case 'name':
-      return toBuffer(nameShape(count, frame, fontFamily), count, frame.width * 0.004, [0, 0]);
+    case 'scatter':
+      return scatterBuffer(count, frame);
     case 'network':
       return toBuffer(networkShape(count, frame), count, shapeSize(frame) * 0.06, anchor(frame));
     case 'shield':

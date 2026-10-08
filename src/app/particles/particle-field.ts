@@ -69,7 +69,9 @@ export class ParticleField {
   private push = new Float32Array(0);
   private display = new Float32Array(0);
   private speed = new Float32Array(0);
-  private shape: ShapeName = 'name';
+  private shape: ShapeName = 'scatter';
+  private opacity = 0;
+  private opacityTarget = 0;
   private shapes = new Map<ShapeName, Float32Array>();
 
   private mouse = { x: 9999, y: 9999, active: false };
@@ -81,7 +83,6 @@ export class ParticleField {
 
   constructor(
     private readonly canvas: HTMLCanvasElement,
-    private readonly fontFamily: string,
     private animate: boolean,
   ) {
     this.renderer = new WebGLRenderer({ canvas, antialias: false, alpha: true, powerPreference: 'high-performance' });
@@ -124,8 +125,8 @@ export class ParticleField {
     if (nextCount !== this.count) this.allocate(nextCount);
 
     this.shapes.clear();
-    for (const name of ['name', 'network', 'shield', 'phone', 'spiral', 'globe'] as ShapeName[]) {
-      this.shapes.set(name, buildShape(name, this.count, this.frame, this.fontFamily));
+    for (const name of ['scatter', 'network', 'shield', 'phone', 'spiral', 'globe'] as ShapeName[]) {
+      this.shapes.set(name, buildShape(name, this.count, this.frame));
     }
     this.target = this.shapes.get(this.shape)!;
     if (!this.animate) this.snap();
@@ -152,16 +153,25 @@ export class ParticleField {
     this.geometry.setAttribute('color', new BufferAttribute(colors, 3));
     this.material.blending = p.additive ? AdditiveBlending : NormalBlending;
     this.material.uniforms['uSize'].value = p.size;
-    this.material.uniforms['uOpacity'].value = p.opacity;
+    this.applyOpacity();
     this.material.needsUpdate = true;
     this.palette = p;
     this.render();
   }
   private palette?: FieldPalette;
 
+  /** Fades the whole field; eased per frame so sections cross-fade smoothly. */
   setOpacity(value: number): void {
-    this.material.uniforms['uOpacity'].value = value * (this.palette?.opacity ?? 1);
-    if (!this.animate) this.render();
+    this.opacityTarget = value;
+    if (!this.animate) {
+      this.opacity = value;
+      this.applyOpacity();
+      this.render();
+    }
+  }
+
+  private applyOpacity(): void {
+    this.material.uniforms['uOpacity'].value = this.opacity * (this.palette?.opacity ?? 1);
   }
 
   setAnimate(animate: boolean): void {
@@ -314,6 +324,9 @@ export class ParticleField {
     const shown = this.display;
     for (let i = 0; i < shown.length; i++) shown[i] = cur[i] + push[i];
     (this.geometry.getAttribute('position') as BufferAttribute).needsUpdate = true;
+
+    this.opacity += (this.opacityTarget - this.opacity) * (1 - Math.pow(0.93, frames));
+    this.applyOpacity();
 
     const ease = 1 - Math.pow(0.95, frames);
     this.points.rotation.x += (this.tilt.x - this.points.rotation.x) * ease;
