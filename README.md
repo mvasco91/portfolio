@@ -38,9 +38,14 @@ npm start        # http://localhost:4200
 ## Structure
 ```
 src/app/
-  core/i18n.service.ts      signal-based EN/FR/ES switch (+ <html lang>, title, ?lang=)
-  core/reveal.directive.ts  reveal-on-scroll with IntersectionObserver
-  data/portfolio.data.ts    all content
-  sections/                 header, hero, about (bento), experience (tabs), work, skills, contact
-src/styles.scss             design tokens and styles
+  core/i18n.service.ts        signal-based EN/FR/ES (html lang, title, ?lang=)
+  core/theme.service.ts       light / dark / high contrast, reduced motion
+  core/page-state.service.ts  open case study, inspector state
+  core/devtools.service.ts    the live signal graph shown in the corner panel
+  data/portfolio.data.ts      all content
+  sections/                   header, hero, case studies, experience, skills, contact, inspector
+src/styles.scss               themes and layout
 ```
+
+## Keyboard shortcuts
+`L` language, `T` theme, `S` signal inspector, `Esc` close.

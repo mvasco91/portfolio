@@ -5,39 +5,17 @@ import { PROFILE, UI } from '../data/portfolio.data';
 @Component({
   selector: 'app-hero',
   template: `
-    <section class="hero" id="top">
-      <div class="container hero__grid">
-        <div class="hero__copy">
-          <p class="pill hero__status">
-            <span class="dot" aria-hidden="true"></span>{{ i18n.t(ui.hero.available) }}
-          </p>
-          <p class="hero__eyebrow">{{ i18n.t(ui.hero.eyebrow) }} <strong>{{ profile.name }}</strong></p>
-          <h1 class="hero__title">{{ i18n.t(ui.hero.headline) }}</h1>
-          <p class="hero__intro">{{ i18n.t(ui.hero.intro) }}</p>
-
-          <div class="hero__ctas">
-            <a class="btn btn--primary" href="#work">{{ i18n.t(ui.hero.ctaWork) }}</a>
-            <a class="btn btn--ghost" href="#contact">{{ i18n.t(ui.hero.ctaContact) }}</a>
-            @if (profile.resume[i18n.lang()]; as resume) {
-              <a class="btn btn--ghost" [href]="resume" download="Mauricio-Vasco-Resume.pdf">{{ i18n.t(ui.hero.resume) }} ↓</a>
-            }
-          </div>
+    <section class="hero wrap" id="top">
+      <h1 class="hero__headline">{{ i18n.t(ui.hero.headline) }}</h1>
+      <div class="hero__body">
+        <p class="hero__intro">{{ i18n.t(ui.hero.intro) }}</p>
+        <p class="hero__available"><span class="live" aria-hidden="true"></span>{{ i18n.t(ui.hero.available) }}</p>
+        <div class="hero__links">
+          <a class="button" [href]="'mailto:' + profile.email">{{ i18n.t(ui.hero.email) }}</a>
+          <a class="link" [href]="profile.resume" download="Mauricio-Vasco-Resume.pdf">{{ i18n.t(ui.hero.resume) }}</a>
+          <a class="link" [href]="profile.linkedin" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="link" [href]="profile.github" target="_blank" rel="noopener">GitHub</a>
         </div>
-
-        <figure class="code-card" aria-hidden="true">
-          <div class="code-card__bar">
-            <span></span><span></span><span></span>
-            <em>mauricio.ts</em>
-          </div>
-          <pre class="code-card__body"><code><span class="k">export const</span> <span class="v">mauricio</span> = &#123;
-  <span class="p">role</span>: <span class="s">'{{ i18n.t(profile.role) }}'</span>,
-  <span class="p">based</span>: <span class="s">'Toronto, ON 🇨🇦'</span>,
-  <span class="p">years</span>: <span class="n">10</span>,
-  <span class="p">stack</span>: [<span class="s">'Angular'</span>, <span class="s">'Signals'</span>, <span class="s">'NgRx'</span>, <span class="s">'Nx'</span>],
-  <span class="p">ledTeamOf</span>: <span class="n">11</span>,
-  <span class="p">ships</span>: <span class="k">signal</span>(<span class="s">'secure SaaS'</span>),
-&#125;;<span class="caret"></span></code></pre>
-        </figure>
       </div>
     </section>
   `,

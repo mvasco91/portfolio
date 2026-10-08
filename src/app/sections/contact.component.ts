@@ -1,43 +1,31 @@
 import { Component, inject, signal } from '@angular/core';
 import { I18nService } from '../core/i18n.service';
-import { RevealDirective } from '../core/reveal.directive';
 import { PROFILE, UI } from '../data/portfolio.data';
 
 @Component({
   selector: 'app-contact',
-  imports: [RevealDirective],
   template: `
-    <section class="section contact" id="contact">
-      <div class="container contact__inner" appReveal>
-        <span class="section__num">05 · {{ i18n.t(ui.nav.contact) }}</span>
-        <h2 class="contact__title">{{ i18n.t(ui.contact.title) }}</h2>
-        <p class="contact__body">{{ i18n.t(ui.contact.body) }}</p>
-
-        <div class="contact__actions">
-          <a class="btn btn--primary btn--lg" [href]="'mailto:' + profile.email">{{ i18n.t(ui.contact.email) }} →</a>
-          @if (profile.resume[i18n.lang()]; as resume) {
-            <a class="btn btn--ghost btn--lg" [href]="resume" download="Mauricio-Vasco-Resume.pdf">{{ i18n.t(ui.contact.resume) }} ↓</a>
-          }
-          <button type="button" class="btn btn--ghost btn--lg" (click)="copy()">
+    <section class="contact wrap" id="contact" aria-labelledby="contact-title">
+      <h2 id="contact-title" class="contact__title">{{ i18n.t(ui.contact.title) }}</h2>
+      <div class="contact__body">
+        <p>{{ i18n.t(ui.contact.body) }}</p>
+        <p class="contact__email">
+          <a [href]="'mailto:' + profile.email">{{ profile.email }}</a>
+          <button type="button" class="link link--quiet" (click)="copy()" aria-live="polite">
             {{ copied() ? i18n.t(ui.contact.copied) : i18n.t(ui.contact.copy) }}
           </button>
-        </div>
-
-        <ul class="contact__links">
-          <li><a [href]="profile.linkedin" target="_blank" rel="noopener">LinkedIn ↗</a></li>
-          @if (profile.github) {
-            <li><a [href]="profile.github" target="_blank" rel="noopener">GitHub ↗</a></li>
-          }
-          <li><a [href]="'mailto:' + profile.email">{{ profile.email }}</a></li>
-        </ul>
+        </p>
+        <p class="contact__links">
+          <a class="link" [href]="profile.resume" download="Mauricio-Vasco-Resume.pdf">{{ i18n.t(ui.hero.resume) }}</a>
+          <a class="link" [href]="profile.linkedin" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="link" [href]="profile.github" target="_blank" rel="noopener">GitHub</a>
+        </p>
       </div>
     </section>
 
-    <footer class="footer">
-      <div class="container footer__inner">
-        <span>© {{ year }} {{ profile.name }} · {{ i18n.t(profile.location) }}</span>
-        <span>{{ i18n.t(ui.footer.built) }}</span>
-      </div>
+    <footer class="footer wrap">
+      <p>{{ i18n.t(ui.footer.built) }} <a class="link" [href]="profile.source" target="_blank" rel="noopener">{{ i18n.t(ui.footer.source) }}</a></p>
+      <p>© {{ year }} {{ profile.name }}, {{ i18n.t(profile.location) }}</p>
     </footer>
   `,
 })

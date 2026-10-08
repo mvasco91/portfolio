@@ -1,53 +1,36 @@
 import { Component, inject } from '@angular/core';
 import { I18nService } from '../core/i18n.service';
-import { RevealDirective } from '../core/reveal.directive';
 import { CERTS, EDUCATION, LANGUAGES, SKILLS, UI } from '../data/portfolio.data';
 
 @Component({
   selector: 'app-skills',
-  imports: [RevealDirective],
   template: `
-    <section class="section" id="skills">
-      <div class="container">
-        <h2 class="section__title" appReveal><span class="section__num">04</span>{{ i18n.t(ui.skills.title) }}</h2>
-
-        <div class="skills">
-          @for (g of skills; track $index; let i = $index) {
-            <article class="tile skills__group" [appReveal]="50 * i">
-              <h3>{{ i18n.t(g.title) }}</h3>
-              <ul class="chips">
-                @for (s of g.items; track s) {
-                  <li class="chip">{{ s }}</li>
-                }
-              </ul>
-            </article>
+    <section class="section wrap" id="skills" aria-labelledby="skills-title">
+      <div class="section__head">
+        <h2 id="skills-title">{{ i18n.t(ui.skills.title) }}</h2>
+      </div>
+      <div class="section__body">
+        <dl class="skills">
+          @for (g of skills; track $index) {
+            <div><dt>{{ i18n.t(g.title) }}</dt><dd>{{ g.items }}</dd></div>
           }
-        </div>
-
+        </dl>
         <div class="creds">
-          <article class="tile" appReveal>
+          <div>
             <h3>{{ i18n.t(ui.skills.certs) }}</h3>
-            <ul class="creds__list">
-              @for (c of certs; track c.name) {
-                <li><strong>{{ c.name }}</strong><span>{{ c.issuer }} · {{ c.year }}</span></li>
-              }
-            </ul>
-          </article>
-          <article class="tile" appReveal="80">
+            @for (c of certs; track c.name) {
+              <p>{{ c.name }}<br /><span>{{ c.issuer }}, {{ c.year }}</span></p>
+            }
+          </div>
+          <div>
             <h3>{{ i18n.t(ui.skills.education) }}</h3>
-            <ul class="creds__list">
-              <li><strong>{{ i18n.t(education.degree) }}</strong><span>{{ education.school }}</span></li>
-              <li><span>{{ i18n.t(education.wes) }}</span></li>
-            </ul>
-          </article>
-          <article class="tile" appReveal="160">
+            <p>{{ i18n.t(education.degree) }}<br /><span>{{ education.school }}</span></p>
+            <p><span>{{ i18n.t(education.wes) }}</span></p>
+          </div>
+          <div>
             <h3>{{ i18n.t(ui.skills.languages) }}</h3>
-            <ul class="creds__list">
-              @for (l of languages; track $index) {
-                <li><strong>{{ i18n.t(l) }}</strong></li>
-              }
-            </ul>
-          </article>
+            <p>{{ i18n.t(languages) }}</p>
+          </div>
         </div>
       </div>
     </section>

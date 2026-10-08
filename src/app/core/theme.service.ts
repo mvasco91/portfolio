@@ -1,29 +1,29 @@
 import { DOCUMENT } from '@angular/common';
 import { Injectable, effect, inject, signal } from '@angular/core';
 
-export type Theme = 'dark' | 'light' | 'contrast';
+export type Theme = 'light' | 'dark' | 'contrast';
 export type Motion = 'full' | 'reduced';
 
 const THEME_KEY = 'portfolio.theme';
 const MOTION_KEY = 'portfolio.motion';
-const THEME_COLOR: Record<Theme, string> = { dark: '#090d0b', light: '#f5f6f2', contrast: '#000000' };
+const THEMES: Theme[] = ['light', 'dark', 'contrast'];
+const THEME_COLOR: Record<Theme, string> = { light: '#f1f4f2', dark: '#0f1e17', contrast: '#000000' };
 
 /**
  * Accessibility preferences, stored per visitor.
- * Defaults follow the OS: prefers-contrast → high contrast, prefers-reduced-motion → reduced.
+ * First visit follows the OS: high contrast, dark mode and reduced motion.
  */
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
   private readonly doc = inject(DOCUMENT);
-  readonly themes: Theme[] = ['dark', 'light', 'contrast'];
+  readonly themes = THEMES;
   readonly theme = signal<Theme>(this.initialTheme());
   readonly motion = signal<Motion>(this.initialMotion());
 
   constructor() {
     effect(() => {
       const theme = this.theme();
-      const root = this.doc.documentElement;
-      root.dataset['theme'] = theme;
+      this.doc.documentElement.dataset['theme'] = theme;
       this.doc.querySelector('meta[name="theme-color"]')?.setAttribute('content', THEME_COLOR[theme]);
       this.save(THEME_KEY, theme);
     });
@@ -34,14 +34,20 @@ export class ThemeService {
     });
   }
 
+  next(): void {
+    const i = THEMES.indexOf(this.theme());
+    this.theme.set(THEMES[(i + 1) % THEMES.length]);
+  }
+
   toggleMotion(): void {
     this.motion.update((m) => (m === 'full' ? 'reduced' : 'full'));
   }
 
   private initialTheme(): Theme {
     const saved = this.read(THEME_KEY);
-    if (saved === 'dark' || saved === 'light' || saved === 'contrast') return saved;
-    return matchMedia('(prefers-contrast: more)').matches ? 'contrast' : 'dark';
+    if (THEMES.includes(saved as Theme)) return saved as Theme;
+    if (matchMedia('(prefers-contrast: more)').matches) return 'contrast';
+    return matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   }
 
   private initialMotion(): Motion {
@@ -62,7 +68,7 @@ export class ThemeService {
     try {
       localStorage.setItem(key, value);
     } catch {
-      /* storage unavailable: ignore */
+      /* storage unavailable */
     }
   }
 }

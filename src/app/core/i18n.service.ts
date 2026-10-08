@@ -1,33 +1,36 @@
 import { DOCUMENT } from '@angular/common';
-import { Injectable, effect, inject, signal } from '@angular/core';
+import { Injectable, computed, effect, inject, signal } from '@angular/core';
 import { DEFAULT_LANG, LANGS, Lang, PROFILE, Text } from '../data/portfolio.data';
 
 const STORAGE_KEY = 'portfolio.lang';
-const HTML_LANG: Record<Lang, string> = { en: 'en-CA', fr: 'fr-CA', es: 'es' };
-
+export const HTML_LANG: Record<Lang, string> = { en: 'en-CA', fr: 'fr-CA', es: 'es' };
 const isLang = (v: unknown): v is Lang => LANGS.includes(v as Lang);
 
 /**
- * Tiny signal-based i18n: the whole UI re-renders when `lang` changes.
- * English is the primary language. Initial language: ?lang= param → visitor's saved choice → English.
+ * Signal-based i18n. English is the primary language.
+ * Initial language: ?lang= param, then the visitor's saved choice, then English.
  */
 @Injectable({ providedIn: 'root' })
 export class I18nService {
   private readonly doc = inject(DOCUMENT);
   readonly langs = LANGS;
   readonly lang = signal<Lang>(this.detect());
+  readonly title = computed(() => `${PROFILE.shortName} | ${PROFILE.role[this.lang()]}`);
 
   constructor() {
     effect(() => {
+      this.doc.documentElement.lang = HTML_LANG[this.lang()];
+    });
+    effect(() => {
+      this.doc.title = this.title();
+    });
+    effect(() => {
       const lang = this.lang();
-      this.doc.documentElement.lang = HTML_LANG[lang];
-      this.doc.title = `${PROFILE.shortName} | ${PROFILE.role[lang]}`;
       try {
         localStorage.setItem(STORAGE_KEY, lang);
       } catch {
-        /* storage unavailable: ignore */
+        /* storage unavailable */
       }
-      // Keep the URL clean for English; share ?lang=fr / ?lang=es for the others.
       const url = new URL(this.doc.location.href);
       if (lang === DEFAULT_LANG) url.searchParams.delete('lang');
       else url.searchParams.set('lang', lang);
@@ -39,8 +42,9 @@ export class I18nService {
     return text[this.lang()];
   }
 
-  set(lang: Lang): void {
-    this.lang.set(lang);
+  next(): void {
+    const i = LANGS.indexOf(this.lang());
+    this.lang.set(LANGS[(i + 1) % LANGS.length]);
   }
 
   private detect(): Lang {

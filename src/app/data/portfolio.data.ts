@@ -11,115 +11,68 @@ export interface Text { en: string; fr: string; es: string }
 /** Same text in every language (names, brands). */
 const same = (s: string): Text => ({ en: s, fr: s, es: s });
 
-export interface Profile {
-  name: string;
-  shortName: string;
-  role: Text;
-  location: Text;
-  email: string;
-  linkedin: string;
-  /** Leave empty to hide the GitHub link. */
-  github: string;
-  /** Path inside /public (e.g. 'resume-en.pdf'). Leave empty to hide the button. */
-  resume: Text;
-}
-
-export interface Metric { value: Text; label: Text; wide?: boolean }
-
-export interface Job {
-  id: string;
-  company: string;
-  role: Text;
-  client?: Text;
-  period: Text;
-  place: Text;
-  bullets: Text[];
-  stack: string[];
-}
-
-export interface Project {
-  name: Text;
-  company: string;
-  kind: Text;
-  summary: Text;
-  highlights: Text[];
-  stack: string[];
-  featured?: boolean;
-}
-
-export interface SkillGroup { title: Text; items: string[] }
-
-export const PROFILE: Profile = {
+export const PROFILE = {
   name: 'Mauricio Vasco Vélez',
   shortName: 'Mauricio Vasco',
   role: {
     en: 'Senior Front-End Developer & Tech Lead',
     fr: 'Développeur front-end senior et responsable technique',
     es: 'Desarrollador front-end senior y líder técnico',
-  },
-  location: { en: 'Toronto, Ontario, Canada', fr: 'Toronto (Ontario), Canada', es: 'Toronto, Ontario, Canadá' },
+  } as Text,
+  location: { en: 'Toronto, Ontario', fr: 'Toronto (Ontario)', es: 'Toronto, Ontario' } as Text,
   email: 'maurovasco91@gmail.com',
   linkedin: 'https://www.linkedin.com/in/mauricio-vasco-velez',
   github: 'https://github.com/mvasco91',
-  resume: same('Mauricio-Vasco-Resume.pdf'),
+  source: 'https://github.com/mvasco91/portfolio',
+  resume: 'Mauricio-Vasco-Resume.pdf',
 };
 
 export const UI = {
   nav: {
-    about: { en: 'About', fr: 'Profil', es: 'Perfil' },
-    experience: { en: 'Experience', fr: 'Expérience', es: 'Experiencia' },
-    work: { en: 'Work', fr: 'Projets', es: 'Proyectos' },
+    work: { en: 'Case studies', fr: 'Études de cas', es: 'Casos' },
+    experience: { en: 'Experience', fr: 'Parcours', es: 'Experiencia' },
     skills: { en: 'Skills', fr: 'Compétences', es: 'Habilidades' },
     contact: { en: 'Contact', fr: 'Contact', es: 'Contacto' },
   },
   hero: {
-    eyebrow: { en: "Hi, I'm", fr: 'Bonjour, je suis', es: 'Hola, soy' },
     headline: {
-      en: 'I lead front-end teams and still write code every day.',
-      fr: 'Je dirige des équipes front-end et je code encore tous les jours.',
-      es: 'Lidero equipos front-end y sigo programando todos los días.',
+      en: 'I lead front‑end teams and still write code every day.',
+      fr: 'Je dirige des équipes front‑end et je code encore tous les jours.',
+      es: 'Lidero equipos front‑end y sigo programando todos los días.',
     },
     intro: {
-      en: "Senior front-end developer with 10 years building Angular apps for banking, insurance and enterprise SaaS. Since 2022 I've led the front-end team at Asigra without stepping away from the code: I set up the architecture of SaaS Assure from the first commit, and I still build features, review pull requests and fix bugs alongside the team.",
-      fr: "Développeur front-end senior avec 10 ans d'expérience en applications Angular pour la banque, l'assurance et le SaaS d'entreprise. Depuis 2022, je dirige l'équipe front-end chez Asigra sans m'éloigner du code : j'ai mis en place l'architecture de SaaS Assure dès le premier commit, et je développe encore des fonctionnalités, révise les pull requests et corrige des bogues avec l'équipe.",
-      es: 'Desarrollador front-end senior con 10 años construyendo aplicaciones Angular para banca, seguros y SaaS empresarial. Desde 2022 lidero el equipo front-end en Asigra sin alejarme del código: armé la arquitectura de SaaS Assure desde el primer commit y sigo desarrollando funcionalidades, revisando pull requests y corrigiendo bugs con el equipo.',
+      en: "I'm Mauricio, a senior front-end developer in Toronto. For 10 years I've built Angular apps for banks, insurers and enterprise SaaS. At Asigra I lead the front-end team and set up the architecture of SaaS Assure from the first commit, and I still build features, review pull requests and fix bugs with the team.",
+      fr: "Je suis Mauricio, développeur front-end senior à Toronto. Depuis 10 ans, je développe des applications Angular pour des banques, des assureurs et du SaaS d'entreprise. Chez Asigra, je dirige l'équipe front-end et j'ai mis en place l'architecture de SaaS Assure dès le premier commit. Je développe encore des fonctionnalités, révise les pull requests et corrige des bogues avec l'équipe.",
+      es: 'Soy Mauricio, desarrollador front-end senior en Toronto. Llevo 10 años construyendo aplicaciones Angular para bancos, aseguradoras y SaaS empresarial. En Asigra lidero el equipo front-end y armé la arquitectura de SaaS Assure desde el primer commit, y sigo desarrollando funcionalidades, revisando pull requests y corrigiendo bugs con el equipo.',
     },
-    ctaWork: { en: 'See my work', fr: 'Voir mes projets', es: 'Ver mis proyectos' },
-    ctaContact: { en: 'Get in touch', fr: 'Me contacter', es: 'Contáctame' },
-    resume: { en: 'Resume (PDF)', fr: 'CV (PDF, anglais)', es: 'Hoja de vida (PDF, inglés)' },
     available: {
-      en: 'Available for Front-End Lead / Senior Front-End Developer roles',
-      fr: 'Disponible pour des postes de responsable front-end / développeur front-end senior',
-      es: 'Disponible para roles de líder front-end / desarrollador front-end senior',
+      en: 'Available for Front-End Lead and Senior Front-End Developer roles in Canada.',
+      fr: 'Disponible pour des postes de responsable front-end et de développeur front-end senior au Canada.',
+      es: 'Disponible para roles de líder front-end y desarrollador front-end senior en Canadá.',
     },
+    email: { en: 'Email me', fr: 'Écrivez-moi', es: 'Escríbeme' },
+    resume: { en: 'Download resume (PDF)', fr: 'Télécharger mon CV (PDF, anglais)', es: 'Descargar hoja de vida (PDF, inglés)' },
   },
-  about: {
-    title: { en: 'About', fr: 'Profil', es: 'Perfil' },
-    body: {
-      en: "I joined Asigra as a Senior Front-End Developer and a week later I was leading the front-end team. The team grew to 11 developers, and along the way I defined the architecture and coding standards for SaaS Assure. Leading never meant leaving the code: I still pick up tickets and ship features with the team. We now use AI tools like Claude Code and Copilot in our day-to-day work, and many features that used to take weeks ship in days. Before Asigra, I spent several years in Colombia building banking and insurance apps for Bancolombia, Itaú and SURA.",
-      fr: "Je suis arrivé chez Asigra comme développeur front-end senior et, une semaine plus tard, je dirigeais l'équipe front-end. L'équipe a grandi jusqu'à 11 développeurs et j'ai défini l'architecture et les normes de code de SaaS Assure. Diriger ne m'a jamais éloigné du code : je prends encore des tickets et je livre des fonctionnalités avec l'équipe. Nous utilisons maintenant des outils d'IA comme Claude Code et Copilot au quotidien, et plusieurs fonctionnalités qui prenaient des semaines sont livrées en quelques jours. Avant Asigra, j'ai passé plusieurs années en Colombie à développer des applications bancaires et d'assurance pour Bancolombia, Itaú et SURA.",
-      es: 'Entré a Asigra como desarrollador front-end senior y a la semana ya estaba liderando el equipo front-end. El equipo llegó a 11 desarrolladores y en el camino definí la arquitectura y los estándares de código de SaaS Assure. Liderar nunca significó dejar el código: sigo tomando tickets y entregando funcionalidades con el equipo. Hoy usamos herramientas de IA como Claude Code y Copilot en el día a día, y muchas funcionalidades que tomaban semanas ahora salen en días. Antes de Asigra trabajé varios años en Colombia haciendo apps bancarias y de seguros para Bancolombia, Itaú y SURA.',
+  cases: {
+    title: { en: 'Case studies', fr: 'Études de cas', es: 'Casos de estudio' },
+    note: {
+      en: 'These are client and employer products, so I describe the work instead of showing screens.',
+      fr: "Ce sont des produits de clients et d'employeurs : je décris le travail au lieu de montrer des écrans.",
+      es: 'Son productos de clientes y empleadores, así que describo el trabajo en lugar de mostrar pantallas.',
     },
-    focusTitle: { en: 'How I work', fr: 'Ma façon de travailler', es: 'Cómo trabajo' },
-    focus: [
-      { en: 'Staying hands-on: I write code, not just review it', fr: "Rester dans le code : je développe, je ne fais pas que réviser", es: 'Seguir programando: escribo código, no solo lo reviso' },
-      { en: 'Architecture the whole team can work in', fr: "Une architecture où toute l'équipe peut travailler", es: 'Arquitectura en la que todo el equipo pueda trabajar' },
-      { en: 'Security first, especially with financial data', fr: "La sécurité d'abord, surtout avec des données financières", es: 'Seguridad primero, sobre todo con datos financieros' },
-      { en: 'Code reviews that actually teach something', fr: 'Des revues de code qui font progresser', es: 'Revisiones de código que enseñen algo' },
-      { en: 'Using AI to move faster without cutting corners', fr: "Utiliser l'IA pour aller plus vite, sans négliger la qualité", es: 'Usar IA para ir más rápido sin descuidar la calidad' },
-    ] as Text[],
-    award: { en: 'Employee of the Quarter · Asigra', fr: 'Employé du trimestre · Asigra', es: 'Empleado del trimestre · Asigra' },
+    open: { en: 'Read case study', fr: "Lire l'étude de cas", es: 'Leer el caso' },
+    close: { en: 'Close', fr: 'Fermer', es: 'Cerrar' },
+    did: { en: 'What I did', fr: "Ce que j'ai fait", es: 'Qué hice' },
+    outcome: { en: 'Outcome', fr: 'Résultat', es: 'Resultado' },
+    facts: {
+      role: { en: 'Role', fr: 'Rôle', es: 'Rol' },
+      period: { en: 'Period', fr: 'Période', es: 'Periodo' },
+      team: { en: 'Team', fr: 'Équipe', es: 'Equipo' },
+      stack: { en: 'Stack', fr: 'Technologies', es: 'Tecnologías' },
+    },
   },
   experience: {
-    title: { en: 'Experience', fr: 'Expérience', es: 'Experiencia' },
-  },
-  work: {
-    title: { en: 'Projects', fr: 'Projets', es: 'Proyectos' },
-    note: {
-      en: 'These are client and employer products, so I describe them instead of showing screenshots.',
-      fr: "Ce sont des produits de clients et d'employeurs, alors je les décris au lieu de montrer des captures d'écran.",
-      es: 'Son productos de clientes y empleadores, por eso los describo en lugar de mostrar capturas.',
-    },
+    title: { en: 'Experience', fr: 'Parcours', es: 'Experiencia' },
   },
   skills: {
     title: { en: 'Skills', fr: 'Compétences', es: 'Habilidades' },
@@ -130,319 +83,437 @@ export const UI = {
   contact: {
     title: { en: "Let's talk.", fr: 'Discutons.', es: 'Hablemos.' },
     body: {
-      en: "I'm open to Senior Front-End or Angular Developer roles as well as Tech Lead positions in Canada. I'm happy writing code full-time or leading a team while staying hands-on. Remote or hybrid in the GTA both work, and I'm open to relocating.",
-      fr: "Je suis ouvert aux postes de développeur front-end ou Angular senior, ainsi qu'aux postes de responsable technique au Canada. Je peux coder à temps plein ou diriger une équipe tout en restant dans le code. À distance ou en mode hybride dans la région de Toronto, et je suis ouvert à déménager.",
-      es: 'Estoy abierto a roles de desarrollador front-end o Angular senior y también a posiciones de líder técnico en Canadá. Me siento cómodo programando a tiempo completo o liderando un equipo sin dejar de programar. Remoto o híbrido en el área de Toronto, y estoy abierto a mudarme.',
+      en: "I'm open to Senior Front-End or Angular Developer roles as well as Tech Lead positions. I'm happy writing code full-time or leading a team while staying hands-on. Remote or hybrid in the GTA both work, and I'm open to relocating.",
+      fr: "Je suis ouvert aux postes de développeur front-end ou Angular senior, ainsi qu'aux postes de responsable technique. Je peux coder à temps plein ou diriger une équipe tout en restant dans le code. À distance ou en mode hybride dans la région de Toronto, et je suis ouvert à déménager.",
+      es: 'Estoy abierto a roles de desarrollador front-end o Angular senior y también a posiciones de líder técnico. Me siento cómodo programando a tiempo completo o liderando un equipo sin dejar de programar. Remoto o híbrido en el área de Toronto, y estoy abierto a mudarme.',
     },
-    email: { en: 'Email me', fr: 'Écrivez-moi', es: 'Escríbeme' },
     copy: { en: 'Copy email', fr: 'Copier le courriel', es: 'Copiar correo' },
-    copied: { en: 'Copied!', fr: 'Copié !', es: '¡Copiado!' },
-    resume: { en: 'Download resume (PDF)', fr: 'Télécharger mon CV (PDF, anglais)', es: 'Descargar hoja de vida (PDF, inglés)' },
+    copied: { en: 'Copied', fr: 'Copié', es: 'Copiado' },
   },
   footer: {
     built: {
-      en: 'Built with Angular and SCSS. Hosted on GitHub Pages.',
-      fr: 'Fait avec Angular et SCSS. Hébergé sur GitHub Pages.',
-      es: 'Hecho con Angular y SCSS. Publicado en GitHub Pages.',
+      en: 'Built with Angular signals. The panel in the corner shows them working.',
+      fr: "Fait avec les signals d'Angular. Le panneau dans le coin les montre en action.",
+      es: 'Hecho con signals de Angular. El panel de la esquina los muestra en acción.',
     },
+    source: { en: 'View the source', fr: 'Voir le code source', es: 'Ver el código fuente' },
   },
-  langNames: {
-    en: same('English'),
-    fr: same('Français'),
-    es: same('Español'),
-  },
+  langNames: { en: same('English'), fr: same('Français'), es: same('Español') },
   langPicker: { en: 'Language', fr: 'Langue', es: 'Idioma' },
   a11y: {
-    open: { en: 'Accessibility & display', fr: 'Accessibilité et affichage', es: 'Accesibilidad y visualización' },
+    open: { en: 'Accessibility and display', fr: 'Accessibilité et affichage', es: 'Accesibilidad y visualización' },
     title: { en: 'Display', fr: 'Affichage', es: 'Visualización' },
     theme: { en: 'Colour theme', fr: 'Thème de couleurs', es: 'Tema de color' },
-    dark: { en: 'Dark', fr: 'Sombre', es: 'Oscuro' },
     light: { en: 'Light', fr: 'Clair', es: 'Claro' },
+    dark: { en: 'Dark', fr: 'Sombre', es: 'Oscuro' },
     contrast: { en: 'High contrast', fr: 'Contraste élevé', es: 'Alto contraste' },
     motion: { en: 'Reduce motion', fr: 'Réduire les animations', es: 'Reducir animaciones' },
-    close: { en: 'Close', fr: 'Fermer', es: 'Cerrar' },
+  },
+  inspector: {
+    toggle: same('Signals'),
+    title: { en: 'Live signal graph', fr: 'Graphe de signals en direct', es: 'Grafo de signals en vivo' },
+    intro: {
+      en: 'This is the real state of this page. Change the language, the theme or open a case study and watch what updates.',
+      fr: "Voici l'état réel de cette page. Changez la langue, le thème ou ouvrez une étude de cas pour voir ce qui se met à jour.",
+      es: 'Este es el estado real de esta página. Cambia el idioma, el tema o abre un caso y mira qué se actualiza.',
+    },
+    log: { en: 'Recent updates', fr: 'Mises à jour récentes', es: 'Actualizaciones recientes' },
+    empty: {
+      en: 'Nothing yet. Try pressing L or T.',
+      fr: "Rien pour l'instant. Essayez L ou T.",
+      es: 'Nada todavía. Prueba con L o T.',
+    },
+    shortcuts: {
+      en: 'Shortcuts: L language, T theme, S this panel',
+      fr: 'Raccourcis : L langue, T thème, S ce panneau',
+      es: 'Atajos: L idioma, T tema, S este panel',
+    },
+    how: { en: 'How it works', fr: 'Comment ça marche', es: 'Cómo funciona' },
+    close: { en: 'Close panel', fr: 'Fermer le panneau', es: 'Cerrar panel' },
   },
 };
 
-export const METRICS: Metric[] = [
-  { value: same('10'), label: { en: 'years building web & mobile apps', fr: 'ans à développer des applications web et mobiles', es: 'años construyendo apps web y móviles' } },
-  { value: same('11'), label: { en: 'developers led at peak', fr: 'développeurs dirigés au plus fort', es: 'desarrolladores liderados en el pico' } },
-  { value: { en: '90%', fr: '90 %', es: '90%' }, label: { en: 'test coverage on SaaS Assure', fr: 'de couverture de tests sur SaaS Assure', es: 'de cobertura de pruebas en SaaS Assure' } },
-  { value: { en: '5,000+', fr: '5 000+', es: '5.000+' }, label: { en: 'users on Wesura (SURA)', fr: 'utilisateurs sur Wesura (SURA)', es: 'usuarios en Wesura (SURA)' } },
-  {
-    value: { en: 'weeks → days', fr: 'semaines → jours', es: 'semanas → días' },
-    label: {
-      en: 'delivery time with AI-assisted workflows',
-      fr: "délai de livraison grâce aux flux assistés par l'IA",
-      es: 'tiempo de entrega con flujos asistidos por IA',
-    },
-    wide: true,
-  },
-];
+/* ----------------------------------------------------------------
+   Case studies (facts only from the resume)
+   ---------------------------------------------------------------- */
+export interface CaseSection {
+  title: Text;
+  items: Text[];
+}
 
-const REMOTE: Text = { en: 'Remote', fr: 'À distance', es: 'Remoto' };
-const MEDELLIN: Text = { en: 'Medellín, Colombia', fr: 'Medellín, Colombie', es: 'Medellín, Colombia' };
-const SENIOR_FE: Text = { en: 'Senior Front-End Developer', fr: 'Développeur front-end senior', es: 'Desarrollador front-end senior' };
+export interface CaseStudy {
+  id: string;
+  name: Text;
+  company: string;
+  summary: Text;
+  context: Text;
+  sections: CaseSection[];
+  outcome: Text;
+  role: Text;
+  period: Text;
+  team?: Text;
+  stack: string;
+}
 
-export const JOBS: Job[] = [
+const T = {
+  architecture: { en: 'Architecture', fr: 'Architecture', es: 'Arquitectura' },
+  problems: { en: 'Hard problems I solved', fr: "Problèmes difficiles que j'ai résolus", es: 'Problemas difíciles que resolví' },
+  quality: { en: 'Quality and delivery', fr: 'Qualité et livraison', es: 'Calidad y entrega' },
+  did: { en: 'What I did', fr: "Ce que j'ai fait", es: 'Qué hice' },
+};
+
+export const CASES: CaseStudy[] = [
   {
-    id: 'asigra',
+    id: 'saas-assure',
+    name: same('SaaS Assure'),
     company: 'Asigra',
+    summary: {
+      en: 'Front-end architecture for an enterprise backup and data-protection platform, from the first commit to a large signal-based migration.',
+      fr: "Architecture front-end d'une plateforme d'entreprise de sauvegarde et de protection des données, du premier commit à une grande migration vers les signals.",
+      es: 'Arquitectura front-end de una plataforma empresarial de respaldo y protección de datos, desde el primer commit hasta una gran migración a signals.',
+    },
+    context: {
+      en: "SaaS Assure is the web front end of Asigra's enterprise backup platform. I joined as a senior developer and was leading the front-end team within a week, so the architecture decisions were mine to make and to live with. Today it runs on Angular 20 with standalone components.",
+      fr: "SaaS Assure est le front-end web de la plateforme de sauvegarde d'entreprise d'Asigra. Je suis arrivé comme développeur senior et je dirigeais l'équipe front-end une semaine plus tard : les décisions d'architecture m'appartenaient, avec leurs conséquences. Aujourd'hui, l'application tourne sur Angular 20 avec des composants autonomes.",
+      es: 'SaaS Assure es el front-end web de la plataforma empresarial de respaldos de Asigra. Entré como desarrollador senior y a la semana ya lideraba el equipo front-end, así que las decisiones de arquitectura eran mías, y también sus consecuencias. Hoy corre sobre Angular 20 con componentes standalone.',
+    },
+    sections: [
+      {
+        title: T.architecture,
+        items: [
+          {
+            en: 'Set up the Nx monorepo with shared libraries and clear boundaries between features.',
+            fr: "Mise en place du monorepo Nx avec des bibliothèques partagées et des frontières claires entre les fonctionnalités.",
+            es: 'Armé el monorepo Nx con librerías compartidas y límites claros entre funcionalidades.',
+          },
+          {
+            en: 'Led a module-by-module migration from classic NgRx (actions, reducers, effects, selectors) to signal stores behind facades, in production and with no downtime. I wrote it as a repeatable playbook: analysis, state mapping, signal store, facade, consumer migration, NgRx removal, tests and validation.',
+            fr: "Direction d'une migration module par module de NgRx classique (actions, reducers, effects, selectors) vers des signal stores derrière des façades, en production et sans interruption. Je l'ai rédigée comme une méthode reproductible : analyse, cartographie de l'état, signal store, façade, migration des consommateurs, retrait de NgRx, tests et validation.",
+            es: 'Lideré una migración módulo por módulo de NgRx clásico (actions, reducers, effects, selectors) a signal stores detrás de facades, en producción y sin caídas. La escribí como un procedimiento repetible: análisis, mapeo del estado, signal store, facade, migración de consumidores, retiro de NgRx, pruebas y validación.',
+          },
+          {
+            en: 'Separated state-connected components from presentational ones across the codebase, replacing manual subscriptions with signal-based reactivity using effect() and untracked().',
+            fr: "Séparation des composants connectés à l'état et des composants de présentation dans tout le code, en remplaçant les abonnements manuels par une réactivité basée sur les signals avec effect() et untracked().",
+            es: 'Separé los componentes conectados al estado de los presentacionales en todo el código, reemplazando suscripciones manuales por reactividad con signals usando effect() y untracked().',
+          },
+          {
+            en: 'Kept four API versions (v1 to v4) working side by side in the most complex module, backup lifecycle management: multi-step restore wizards with MFA or MPA at the final step, granular and domain-level backup selection, and a vault-browsing session that retries transient 504 errors with exponential backoff.',
+            fr: "Coexistence de quatre versions d'API (v1 à v4) dans le module le plus complexe, la gestion du cycle de vie des sauvegardes : assistants de restauration en plusieurs étapes avec MFA ou MPA à la dernière étape, sélection granulaire ou par domaine, et une session de navigation du coffre qui relance les erreurs 504 passagères avec un délai exponentiel.",
+            es: 'Mantuve cuatro versiones de API (v1 a v4) funcionando juntas en el módulo más complejo, la gestión del ciclo de vida de los respaldos: asistentes de restauración de varios pasos con MFA o MPA en el último paso, selección granular o por dominio, y una sesión de exploración del vault que reintenta los errores 504 transitorios con backoff exponencial.',
+          },
+          {
+            en: 'Picked the simplest tool for each case: NgRx where much of the app shares state, lightweight services where components only need to talk to each other.',
+            fr: "Choix de l'outil le plus simple selon le cas : NgRx quand une grande partie de l'application partage l'état, des services légers quand des composants doivent seulement communiquer entre eux.",
+            es: 'Elegí la herramienta más simple para cada caso: NgRx donde gran parte de la app comparte estado, servicios livianos donde los componentes solo necesitan comunicarse entre sí.',
+          },
+          {
+            en: 'Rebuilt the shared UI library with an atomic design structure and moved it from legacy SCSS to Tailwind CSS.',
+            fr: "Refonte de la bibliothèque d'interface partagée selon une structure atomique, en passant du SCSS historique à Tailwind CSS.",
+            es: 'Reconstruí la librería de UI compartida con una estructura de diseño atómico y la migré de SCSS heredado a Tailwind CSS.',
+          },
+        ],
+      },
+      {
+        title: T.problems,
+        items: [
+          {
+            en: 'Refresh-token race across browser tabs: elected a leader tab with the Web Locks API, which removed duplicate refresh calls and the auth failures they caused.',
+            fr: "Concurrence entre onglets lors du renouvellement du jeton : élection d'un onglet principal avec la Web Locks API, ce qui a éliminé les appels en double et les échecs d'authentification qu'ils causaient.",
+            es: 'Condición de carrera del refresh token entre pestañas: elegí una pestaña líder con la Web Locks API, lo que eliminó las llamadas duplicadas y los fallos de autenticación que causaban.',
+          },
+          {
+            en: 'Cross-account cache leak: switching accounts could show cached data from the previous one. I found the root cause and shipped the fix with regression tests and QA acceptance criteria.',
+            fr: "Fuite de cache entre comptes : changer de compte pouvait afficher des données du compte précédent. J'ai trouvé la cause et livré le correctif avec des tests de régression et des critères d'acceptation pour l'assurance qualité.",
+            es: 'Fuga de caché entre cuentas: al cambiar de cuenta podían aparecer datos de la anterior. Encontré la causa raíz y entregué la corrección con pruebas de regresión y criterios de aceptación para QA.',
+          },
+          {
+            en: 'Firefox-only race conditions in the OTP and MFA inputs, with lost focus and dropped keystrokes during sign-in.',
+            fr: "Conditions de concurrence propres à Firefox dans les champs OTP et MFA, avec perte de focus et frappes ignorées pendant la connexion.",
+            es: 'Condiciones de carrera exclusivas de Firefox en los campos de OTP y MFA, con pérdida de foco y teclas que no se registraban al iniciar sesión.',
+          },
+          {
+            en: 'Front-end mitigations for OWASP-class issues such as insecure direct object references, rolled out in stages from dev to preprod to production.',
+            fr: "Mesures front-end contre des vulnérabilités de type OWASP, comme les références directes non sécurisées à des objets, déployées par étapes du développement à la préproduction puis à la production.",
+            es: 'Mitigaciones front-end para vulnerabilidades tipo OWASP, como referencias directas inseguras a objetos, desplegadas por etapas de dev a preproducción y producción.',
+          },
+        ],
+      },
+      {
+        title: T.quality,
+        items: [
+          {
+            en: 'Test coverage at 90% with Jest and Playwright. I reproduce bugs against real network and console behaviour before fixing them, instead of guessing the cause.',
+            fr: "Couverture de tests à 90 % avec Jest et Playwright. Je reproduis les bogues avec le comportement réel du réseau et de la console avant de les corriger, au lieu de deviner la cause.",
+            es: '90% de cobertura de pruebas con Jest y Playwright. Reproduzco los bugs con el comportamiento real de la red y la consola antes de corregirlos, en lugar de adivinar la causa.',
+          },
+          {
+            en: 'I own production deployments through Jenkins CI/CD and work closely with backend engineers, architects, product and QA.',
+            fr: "Je suis responsable des déploiements en production via Jenkins CI/CD et je travaille de près avec le back-end, les architectes, le produit et l'assurance qualité.",
+            es: 'Soy responsable de los despliegues a producción con Jenkins CI/CD y trabajo de cerca con backend, arquitectos, producto y QA.',
+          },
+        ],
+      },
+    ],
+    outcome: {
+      en: 'The team grew to 11 developers on this codebase, and I was named Employee of the Quarter for on-time delivery.',
+      fr: "L'équipe a grandi jusqu'à 11 développeurs sur ce code, et j'ai été nommé Employé du trimestre pour le respect des délais.",
+      es: 'El equipo llegó a 11 desarrolladores sobre este código, y me nombraron Empleado del trimestre por entregar a tiempo.',
+    },
     role: { en: 'Front-End Tech Lead', fr: 'Responsable technique front-end', es: 'Líder técnico front-end' },
-    period: { en: 'Jun 2022 – Present', fr: "juin 2022 – aujourd'hui", es: 'jun. 2022 – actualidad' },
-    place: { en: 'Toronto, ON', fr: 'Toronto (Ontario)', es: 'Toronto, ON' },
-    bullets: [
-      {
-        en: 'Hired as Senior Front-End Developer and promoted to lead the front-end team within the first week; Employee of the Quarter for on-time delivery and commitment.',
-        fr: "Embauché comme développeur front-end senior et promu à la tête de l'équipe front-end dès la première semaine; nommé Employé du trimestre pour le respect des délais et l'engagement.",
-        es: 'Contratado como desarrollador front-end senior y ascendido a líder del equipo front-end en la primera semana; Empleado del trimestre por entregas a tiempo y compromiso.',
-      },
-      {
-        en: 'Lead and mentor the front-end team (up to 11 developers, currently 3) while staying hands-on, running code reviews and technical hiring.',
-        fr: "Dirige et accompagne l'équipe front-end (jusqu'à 11 développeurs, 3 actuellement) tout en restant impliqué dans le code, les revues de code et le recrutement technique.",
-        es: 'Lidero y acompaño al equipo front-end (hasta 11 desarrolladores, hoy 3) sin dejar de programar, haciendo revisiones de código y entrevistas técnicas.',
-      },
-      {
-        en: 'Built the front-end architecture of SaaS Assure, a secure enterprise data-protection platform, from inception with Angular, NgRx, Nx and Signals.',
-        fr: "Conception de l'architecture front-end de SaaS Assure, une plateforme SaaS sécurisée de protection des données, dès sa création avec Angular, NgRx, Nx et Signals.",
-        es: 'Construí desde cero la arquitectura front-end de SaaS Assure, una plataforma empresarial segura de protección de datos, con Angular, NgRx, Nx y Signals.',
-      },
-      {
-        en: 'Keep 90% test coverage with Jest and Playwright and own production deployments through Jenkins CI/CD.',
-        fr: "Maintien d'une couverture de tests de 90 % avec Jest et Playwright et responsabilité des déploiements en production via Jenkins CI/CD.",
-        es: 'Mantengo 90% de cobertura de pruebas con Jest y Playwright y soy responsable de los despliegues a producción con Jenkins CI/CD.',
-      },
-      {
-        en: 'Introduced AI-assisted workflows (Claude Code, GitHub Copilot, agents), cutting delivery for many features from weeks to days.',
-        fr: "Introduction de flux de travail assistés par l'IA (Claude Code, GitHub Copilot, agents), réduisant le délai de livraison de nombreuses fonctionnalités de plusieurs semaines à quelques jours.",
-        es: 'Introduje flujos de trabajo asistidos por IA (Claude Code, GitHub Copilot, agentes), reduciendo la entrega de muchas funcionalidades de semanas a días.',
-      },
-    ],
-    stack: ['Angular', 'NgRx', 'Nx', 'Signals', 'AWS', 'Jest', 'Playwright', 'Jenkins'],
+    period: { en: '2022 to present', fr: "2022 à aujourd'hui", es: '2022 a hoy' },
+    team: { en: 'Up to 11 developers, currently 3', fr: "Jusqu'à 11 développeurs, 3 actuellement", es: 'Hasta 11 desarrolladores, hoy 3' },
+    stack: 'Angular 20, NgRx, Signals, Nx, Angular Material, Tailwind CSS, Jest, Playwright, Jenkins, AWS',
   },
   {
-    id: 'gorilla',
-    company: 'Gorilla Logic',
-    role: SENIOR_FE,
-    client: {
-      en: 'Client: Western Asset (fixed-income investment management)',
-      fr: 'Client : Western Asset (gestion de placements à revenu fixe)',
-      es: 'Cliente: Western Asset (gestión de inversiones de renta fija)',
+    id: 'ai-workflows',
+    name: { en: 'AI-assisted engineering', fr: "Ingénierie assistée par l'IA", es: 'Ingeniería asistida por IA' },
+    company: 'Asigra',
+    summary: {
+      en: 'A repeatable way for a production team to work with AI assistants, with a person approving every step that matters.',
+      fr: "Une façon reproductible pour une équipe en production de travailler avec des assistants d'IA, avec une personne qui approuve chaque étape importante.",
+      es: 'Una forma repetible de que un equipo en producción trabaje con asistentes de IA, con una persona aprobando cada paso importante.',
     },
-    period: { en: 'Dec 2021 – Jun 2022', fr: 'déc. 2021 – juin 2022', es: 'dic. 2021 – jun. 2022' },
-    place: REMOTE,
-    bullets: [
+    context: {
+      en: 'Using an AI assistant is easy. Making it reliable inside a team with code review, QA and a release process is the hard part. At Asigra I designed how we use these tools, not just which ones we use.',
+      fr: "Utiliser un assistant d'IA est facile. Le rendre fiable dans une équipe avec des revues de code, de l'assurance qualité et un processus de mise en production, c'est là que c'est difficile. Chez Asigra, j'ai conçu notre façon d'utiliser ces outils, pas seulement le choix des outils.",
+      es: 'Usar un asistente de IA es fácil. Lo difícil es que sea confiable dentro de un equipo con revisión de código, QA y un proceso de releases. En Asigra diseñé cómo usamos estas herramientas, no solo cuáles usamos.',
+    },
+    sections: [
       {
-        en: 'Built new Angular applications for a global investment management firm.',
-        fr: 'Développement de nouvelles applications Angular pour une société mondiale de gestion de placements.',
-        es: 'Construí nuevas aplicaciones Angular para una firma global de gestión de inversiones.',
+        title: { en: 'Skills built for real team workflows', fr: "Des compétences conçues pour les vrais flux de l'équipe", es: 'Skills hechas para los flujos reales del equipo' },
+        items: [
+          {
+            en: 'Migration skills that run the NgRx to signal store and component refactors in gated phases (analysis, implementation, tests, validation) instead of one unsupervised pass.',
+            fr: "Des compétences de migration qui exécutent la transition de NgRx vers les signal stores et la refonte des composants par phases contrôlées (analyse, implémentation, tests, validation), plutôt qu'en une seule passe sans supervision.",
+            es: 'Skills de migración que ejecutan el paso de NgRx a signal stores y la refactorización de componentes en fases con control (análisis, implementación, pruebas, validación) en lugar de una sola pasada sin supervisión.',
+          },
+          {
+            en: "QA criteria drafted from the branch's actual code diff, not from a template, and published only after a person approves them.",
+            fr: "Des critères d'assurance qualité rédigés à partir du diff réel de la branche, pas d'un gabarit, et publiés seulement après l'approbation d'une personne.",
+            es: 'Criterios de QA redactados a partir del diff real de la rama, no de una plantilla, y publicados solo después de que una persona los aprueba.',
+          },
+          {
+            en: 'A code-review checklist compiled from real reviewer comments, SonarQube and axe-core audits, so the same review comments stop coming back.',
+            fr: "Une liste de vérification pour les revues de code, construite à partir de vrais commentaires de réviseurs et d'audits SonarQube et axe-core, pour que les mêmes remarques ne reviennent plus.",
+            es: 'Un checklist de code review armado con comentarios reales de revisores y auditorías de SonarQube y axe-core, para que los mismos comentarios dejen de repetirse.',
+          },
+          {
+            en: 'Dev-testing automation (test runs, evidence capture, structured reports) with human sign-off before anything is shared outside the team.',
+            fr: "Automatisation des tests de développement (exécution, preuves, rapports structurés) avec validation humaine avant tout partage hors de l'équipe.",
+            es: 'Automatización de pruebas de desarrollo (ejecución, captura de evidencia, reportes estructurados) con aprobación humana antes de compartir nada fuera del equipo.',
+          },
+        ],
       },
       {
-        en: 'Delivered multiple successful production releases and earned client recognition for performance.',
-        fr: 'Plusieurs mises en production réussies, saluées par le client pour leur performance.',
-        es: 'Entregué varios lanzamientos exitosos a producción, con reconocimiento del cliente por el desempeño.',
+        title: { en: 'Context and integrations', fr: 'Contexte et intégrations', es: 'Contexto e integraciones' },
+        items: [
+          {
+            en: 'A memory structure (user context, team feedback and preferences, project state, references) so the assistant keeps business context and team agreements between sessions.',
+            fr: "Une structure de mémoire (contexte de l'utilisateur, rétroaction et préférences de l'équipe, état du projet, références) pour que l'assistant garde le contexte d'affaires et les ententes de l'équipe d'une session à l'autre.",
+            es: 'Una estructura de memoria (contexto del usuario, feedback y preferencias del equipo, estado del proyecto, referencias) para que el asistente conserve el contexto del negocio y los acuerdos del equipo entre sesiones.',
+          },
+          {
+            en: 'Connected the assistant to Jira and Bitbucket through MCP and browser automation for tickets and pull request reviews, without credentials in code.',
+            fr: "Connexion de l'assistant à Jira et Bitbucket par MCP et automatisation du navigateur pour les tickets et les revues de pull requests, sans identifiants dans le code.",
+            es: 'Conecté el asistente a Jira y Bitbucket con MCP y automatización del navegador para tickets y revisión de pull requests, sin credenciales en el código.',
+          },
+        ],
+      },
+      {
+        title: { en: 'Guardrails', fr: 'Garde-fous', es: 'Límites' },
+        items: [
+          {
+            en: 'Clear rules for what the assistant may do on its own and what always needs a person: commits, pushes, pull request comments and ticket creation.',
+            fr: "Des règles claires sur ce que l'assistant peut faire seul et ce qui exige toujours une personne : commits, pushes, commentaires de pull requests et création de tickets.",
+            es: 'Reglas claras sobre qué puede hacer el asistente por su cuenta y qué siempre requiere a una persona: commits, pushes, comentarios en pull requests y creación de tickets.',
+          },
+        ],
       },
     ],
-    stack: ['Angular', 'TypeScript', 'RxJS', 'SCSS'],
+    outcome: {
+      en: 'Many features that used to take weeks now ship in days, and code review, QA and releases keep their human checkpoints.',
+      fr: "Plusieurs fonctionnalités qui prenaient des semaines sont maintenant livrées en quelques jours, et les revues de code, l'assurance qualité et les mises en production gardent leurs points de contrôle humains.",
+      es: 'Muchas funcionalidades que tomaban semanas ahora salen en días, y el code review, QA y los releases mantienen sus puntos de control humanos.',
+    },
+    role: { en: 'Front-End Tech Lead', fr: 'Responsable technique front-end', es: 'Líder técnico front-end' },
+    period: { en: 'Ongoing', fr: 'En cours', es: 'En curso' },
+    stack: 'Claude Code, GitHub Copilot, MCP, Jira, Bitbucket, SonarQube, axe-core',
   },
   {
-    id: 'making-sense',
-    company: 'Making Sense',
-    role: SENIOR_FE,
-    client: { en: 'Client: AHP (U.S.)', fr: 'Client : AHP (États-Unis)', es: 'Cliente: AHP (EE. UU.)' },
-    period: { en: 'Jan 2021 – Dec 2021', fr: 'janv. 2021 – déc. 2021', es: 'ene. 2021 – dic. 2021' },
-    place: REMOTE,
-    bullets: [
-      {
-        en: "Shipped features to production for a U.S. client's web platform using Angular and NgRx.",
-        fr: "Livraison de fonctionnalités en production pour la plateforme web d'un client américain avec Angular et NgRx.",
-        es: 'Llevé funcionalidades a producción para la plataforma web de un cliente estadounidense con Angular y NgRx.',
-      },
-      {
-        en: 'Earned positive client feedback for quality and reliability of delivery.',
-        fr: 'Rétroaction positive du client sur la qualité et la fiabilité des livraisons.',
-        es: 'Recibí comentarios positivos del cliente por la calidad y confiabilidad de las entregas.',
-      },
-    ],
-    stack: ['Angular', 'NgRx', 'RxJS', 'TypeScript'],
-  },
-  {
-    id: 'sura',
+    id: 'wesura',
+    name: same('Wesura'),
     company: 'SURA',
-    role: {
-      en: 'Senior Front-End Developer / Front-End Team Lead',
-      fr: "Développeur front-end senior / chef d'équipe front-end",
-      es: 'Desarrollador front-end senior / líder de equipo front-end',
+    summary: {
+      en: 'Leading the front-end team of a customer-facing insurance platform with 5,000+ users.',
+      fr: "Direction de l'équipe front-end d'une plateforme d'assurance destinée aux clients, avec plus de 5 000 utilisateurs.",
+      es: 'Liderazgo del equipo front-end de una plataforma de seguros para clientes con más de 5.000 usuarios.',
     },
-    client: { en: 'Project: Wesura', fr: 'Projet : Wesura', es: 'Proyecto: Wesura' },
-    period: { en: 'Dec 2019 – Jan 2021', fr: 'déc. 2019 – janv. 2021', es: 'dic. 2019 – ene. 2021' },
-    place: MEDELLIN,
-    bullets: [
+    context: {
+      en: "Wesura is a customer-facing insurance platform from SURA, one of Latin America's largest financial groups. I joined as a senior front-end developer and took on the front-end team lead role.",
+      fr: "Wesura est une plateforme d'assurance destinée aux clients de SURA, l'un des plus grands groupes financiers d'Amérique latine. Je suis arrivé comme développeur front-end senior et j'ai pris la direction de l'équipe front-end.",
+      es: 'Wesura es una plataforma de seguros para clientes de SURA, uno de los grupos financieros más grandes de América Latina. Entré como desarrollador front-end senior y asumí el liderazgo del equipo front-end.',
+    },
+    sections: [
       {
-        en: "Led the front-end team for Wesura, a customer-facing insurance platform of one of Latin America's largest financial groups.",
-        fr: "Direction de l'équipe front-end de Wesura, plateforme d'assurance destinée aux clients de l'un des plus grands groupes financiers d'Amérique latine.",
-        es: 'Lideré el equipo front-end de Wesura, plataforma de seguros para clientes de uno de los grupos financieros más grandes de América Latina.',
+        title: T.did,
+        items: [
+      {
+        en: 'Led the front-end team while building features myself in Angular and TypeScript.',
+        fr: "Direction de l'équipe front-end tout en développant moi-même des fonctionnalités en Angular et TypeScript.",
+        es: 'Lideré el equipo front-end mientras desarrollaba funcionalidades en Angular y TypeScript.',
       },
       {
-        en: 'Platform served 5,000+ users.',
-        fr: 'Plateforme utilisée par plus de 5 000 personnes.',
-        es: 'La plataforma atendió a más de 5.000 usuarios.',
+        en: 'Worked on the parts of the product that customers use directly, where clarity and reliability matter most.',
+        fr: 'Travail sur les parties du produit utilisées directement par les clients, là où la clarté et la fiabilité comptent le plus.',
+        es: 'Trabajé en las partes del producto que usan directamente los clientes, donde la claridad y la confiabilidad importan más.',
+      },
+        ],
       },
     ],
-    stack: ['Angular', 'TypeScript', 'SCSS', 'REST APIs'],
+    outcome: {
+      en: 'The platform served more than 5,000 users.',
+      fr: 'La plateforme a servi plus de 5 000 utilisateurs.',
+      es: 'La plataforma atendió a más de 5.000 usuarios.',
+    },
+    role: {
+      en: 'Senior Front-End Developer, then Front-End Team Lead',
+      fr: "Développeur front-end senior, puis chef d'équipe front-end",
+      es: 'Desarrollador front-end senior, luego líder del equipo front-end',
+    },
+    period: { en: '2019 to 2021', fr: '2019 à 2021', es: '2019 a 2021' },
+    stack: 'Angular, TypeScript, REST APIs',
   },
   {
-    id: 'pragma',
+    id: 'banking',
+    name: { en: 'Banking apps', fr: 'Applications bancaires', es: 'Apps bancarias' },
     company: 'Pragma',
-    role: { en: 'Front-End Developer', fr: 'Développeur front-end', es: 'Desarrollador front-end' },
-    client: {
-      en: 'Clients: Itaú, Bancolombia, BCR, Genfar, Universidad de Antioquia',
-      fr: 'Clients : Itaú, Bancolombia, BCR, Genfar, Universidad de Antioquia',
-      es: 'Clientes: Itaú, Bancolombia, BCR, Genfar, Universidad de Antioquia',
+    summary: {
+      en: 'Web and hybrid mobile banking apps for Itaú, Bancolombia and BCR in high-security environments.',
+      fr: 'Applications bancaires web et mobiles hybrides pour Itaú, Bancolombia et BCR, dans des environnements à haute sécurité.',
+      es: 'Apps bancarias web y móviles híbridas para Itaú, Bancolombia y BCR en entornos de alta seguridad.',
     },
-    period: { en: 'Aug 2016 – Dec 2019', fr: 'août 2016 – déc. 2019', es: 'ago. 2016 – dic. 2019' },
-    place: MEDELLIN,
-    bullets: [
+    context: {
+      en: 'At Pragma I worked for several clients, mainly banks: Itaú, Bancolombia and BCR, along with Genfar and Universidad de Antioquia. Banking work means strict security rules and careful handling of financial data.',
+      fr: "Chez Pragma, j'ai travaillé pour plusieurs clients, surtout des banques : Itaú, Bancolombia et BCR, ainsi que Genfar et l'Universidad de Antioquia. Le travail bancaire implique des règles de sécurité strictes et une gestion rigoureuse des données financières.",
+      es: 'En Pragma trabajé para varios clientes, sobre todo bancos: Itaú, Bancolombia y BCR, además de Genfar y la Universidad de Antioquia. Trabajar con bancos implica reglas de seguridad estrictas y un manejo cuidadoso de los datos financieros.',
+    },
+    sections: [
       {
-        en: 'Built banking web and mobile applications for major banks (Itaú, Bancolombia, BCR) in high-security environments.',
-        fr: "Développement d'applications bancaires web et mobiles pour de grandes banques (Itaú, Bancolombia, BCR) dans des environnements à haute sécurité.",
-        es: 'Construí aplicaciones bancarias web y móviles para grandes bancos (Itaú, Bancolombia, BCR) en entornos de alta seguridad.',
+        title: T.did,
+        items: [
+      {
+        en: 'Built banking web apps in AngularJS and later Angular, and hybrid iOS and Android apps with Ionic.',
+        fr: "Développement d'applications bancaires web en AngularJS puis en Angular, et d'applications hybrides iOS et Android avec Ionic.",
+        es: 'Construí apps bancarias web en AngularJS y luego en Angular, y apps híbridas iOS y Android con Ionic.',
       },
       {
-        en: 'Delivered multiple production releases in Scrum teams with continuous integration through Jenkins.',
+        en: 'Shipped multiple production releases in Scrum teams with continuous integration through Jenkins.',
         fr: "Plusieurs mises en production au sein d'équipes Scrum, avec intégration continue via Jenkins.",
         es: 'Entregué varios lanzamientos a producción en equipos Scrum con integración continua en Jenkins.',
       },
+        ],
+      },
     ],
-    stack: ['AngularJS', 'Angular', 'Ionic', 'TypeScript', 'Jenkins'],
+    outcome: {
+      en: 'Three and a half years of releases for some of the largest banks in the region, and the security habits I still bring to every project.',
+      fr: "Trois ans et demi de mises en production pour certaines des plus grandes banques de la région, et des habitudes de sécurité que j'apporte encore à chaque projet.",
+      es: 'Tres años y medio de lanzamientos para algunos de los bancos más grandes de la región, y hábitos de seguridad que sigo aplicando en cada proyecto.',
+    },
+    role: { en: 'Front-End Developer', fr: 'Développeur front-end', es: 'Desarrollador front-end' },
+    period: { en: '2016 to 2019', fr: '2016 à 2019', es: '2016 a 2019' },
+    stack: 'AngularJS, Angular, Ionic, TypeScript, Jenkins',
   },
 ];
 
-export const PROJECTS: Project[] = [
+/* ----------------------------------------------------------------
+   Experience (a real sequence, newest first)
+   ---------------------------------------------------------------- */
+export interface Job {
+  years: string;
+  company: string;
+  role: Text;
+  note: Text;
+}
+
+export const JOBS: Job[] = [
   {
-    name: same('SaaS Assure'),
+    years: '2022–now',
     company: 'Asigra',
-    featured: true,
-    kind: {
-      en: 'Enterprise SaaS · Data protection',
-      fr: "SaaS d'entreprise · Protection des données",
-      es: 'SaaS empresarial · Protección de datos',
+    role: { en: 'Front-End Tech Lead', fr: 'Responsable technique front-end', es: 'Líder técnico front-end' },
+    note: {
+      en: 'Toronto. Promoted from Senior Developer in the first week. Working from Canada full-time since December 2024.',
+      fr: 'Toronto. Promu de développeur senior dès la première semaine. En poste à temps plein depuis le Canada depuis décembre 2024.',
+      es: 'Toronto. Ascendido de desarrollador senior en la primera semana. Trabajando desde Canadá a tiempo completo desde diciembre de 2024.',
     },
-    summary: {
-      en: 'A secure, multi-tenant data-protection platform for enterprises. I designed its front-end architecture from day one and lead the team that builds it.',
-      fr: "Une plateforme SaaS sécurisée et multilocataire de protection des données pour les entreprises. J'en ai conçu l'architecture front-end dès le premier jour et je dirige l'équipe qui la développe.",
-      es: 'Una plataforma segura y multi-tenant de protección de datos para empresas. Diseñé su arquitectura front-end desde el primer día y lidero el equipo que la construye.',
-    },
-    highlights: [
-      { en: 'Nx monorepo with NgRx + Signals state', fr: 'Monorepo Nx avec état NgRx + Signals', es: 'Monorepo Nx con estado en NgRx + Signals' },
-      { en: '90% coverage · Jest + Playwright', fr: 'Couverture de 90 % · Jest + Playwright', es: '90% de cobertura · Jest + Playwright' },
-      { en: 'AWS-backed APIs · Jenkins CI/CD', fr: 'API sur AWS · CI/CD Jenkins', es: 'APIs sobre AWS · CI/CD con Jenkins' },
-    ],
-    stack: ['Angular', 'Nx', 'NgRx', 'Signals', 'AWS'],
   },
   {
-    name: same('Wesura'),
-    company: 'SURA',
-    kind: { en: 'Insurance · Customer platform', fr: 'Assurance · Plateforme client', es: 'Seguros · Plataforma de clientes' },
-    summary: {
-      en: "Customer-facing insurance platform for one of Latin America's largest financial groups, serving 5,000+ users. I led its front-end team.",
-      fr: "Plateforme d'assurance destinée aux clients de l'un des plus grands groupes financiers d'Amérique latine, utilisée par plus de 5 000 personnes. J'en ai dirigé l'équipe front-end.",
-      es: 'Plataforma de seguros para clientes de uno de los grupos financieros más grandes de América Latina, con más de 5.000 usuarios. Lideré su equipo front-end.',
-    },
-    highlights: [
-      { en: 'Front-end team leadership', fr: "Direction de l'équipe front-end", es: 'Liderazgo del equipo front-end' },
-      { en: '5,000+ users', fr: 'Plus de 5 000 utilisateurs', es: 'Más de 5.000 usuarios' },
-    ],
-    stack: ['Angular', 'TypeScript'],
-  },
-  {
-    name: { en: 'Banking apps', fr: 'Applications bancaires', es: 'Apps bancarias' },
-    company: 'Pragma',
-    kind: { en: 'Banking · Web & mobile', fr: 'Banque · Web et mobile', es: 'Banca · Web y móvil' },
-    summary: {
-      en: 'Web and hybrid mobile banking apps for Itaú, Bancolombia and BCR, built in high-security environments.',
-      fr: 'Applications bancaires web et mobiles hybrides pour Itaú, Bancolombia et BCR, développées dans des environnements à haute sécurité.',
-      es: 'Aplicaciones bancarias web y móviles híbridas para Itaú, Bancolombia y BCR, construidas en entornos de alta seguridad.',
-    },
-    highlights: [
-      { en: 'Hybrid iOS & Android with Ionic', fr: 'Applications hybrides iOS et Android avec Ionic', es: 'Apps híbridas iOS y Android con Ionic' },
-      same('AngularJS → Angular'),
-    ],
-    stack: ['Angular', 'Ionic', 'Jenkins'],
-  },
-  {
-    name: same('Western Asset'),
+    years: '2021–2022',
     company: 'Gorilla Logic',
-    kind: { en: 'Investment management', fr: 'Gestion de placements', es: 'Gestión de inversiones' },
-    summary: {
-      en: 'New Angular applications for a global fixed-income investment firm, recognized by the client for performance.',
-      fr: 'Nouvelles applications Angular pour une société mondiale de placements à revenu fixe, saluées par le client pour leur performance.',
-      es: 'Nuevas aplicaciones Angular para una firma global de inversiones de renta fija, reconocidas por el cliente por su desempeño.',
+    role: { en: 'Senior Front-End Developer', fr: 'Développeur front-end senior', es: 'Desarrollador front-end senior' },
+    note: {
+      en: 'New Angular applications for Western Asset, a global fixed-income investment firm. Recognized by the client for performance.',
+      fr: 'Nouvelles applications Angular pour Western Asset, société mondiale de placements à revenu fixe. Saluées par le client pour leur performance.',
+      es: 'Nuevas aplicaciones Angular para Western Asset, firma global de inversiones de renta fija. Reconocidas por el cliente por su desempeño.',
     },
-    highlights: [{ en: 'Multiple production releases', fr: 'Plusieurs mises en production', es: 'Varios lanzamientos a producción' }],
-    stack: ['Angular', 'RxJS'],
   },
   {
-    name: same('AHP'),
+    years: '2021',
     company: 'Making Sense',
-    kind: { en: 'U.S. web platform', fr: 'Plateforme web américaine', es: 'Plataforma web en EE. UU.' },
-    summary: {
-      en: "Production features for a U.S. client's web platform, built with Angular and NgRx.",
-      fr: "Fonctionnalités en production pour la plateforme web d'un client américain, avec Angular et NgRx.",
-      es: 'Funcionalidades en producción para la plataforma web de un cliente estadounidense, con Angular y NgRx.',
+    role: { en: 'Senior Front-End Developer', fr: 'Développeur front-end senior', es: 'Desarrollador front-end senior' },
+    note: {
+      en: "Production features in Angular and NgRx for AHP, a U.S. client's web platform.",
+      fr: "Fonctionnalités en production avec Angular et NgRx pour AHP, la plateforme web d'un client américain.",
+      es: 'Funcionalidades en producción con Angular y NgRx para AHP, la plataforma web de un cliente estadounidense.',
     },
-    highlights: [same('Angular + NgRx')],
-    stack: ['Angular', 'NgRx'],
+  },
+  {
+    years: '2019–2021',
+    company: 'SURA',
+    role: { en: 'Senior Front-End Developer and Team Lead', fr: "Développeur front-end senior et chef d'équipe", es: 'Desarrollador front-end senior y líder de equipo' },
+    note: { en: 'Wesura insurance platform.', fr: "Plateforme d'assurance Wesura.", es: 'Plataforma de seguros Wesura.' },
+  },
+  {
+    years: '2016–2019',
+    company: 'Pragma',
+    role: { en: 'Front-End Developer', fr: 'Développeur front-end', es: 'Desarrollador front-end' },
+    note: {
+      en: 'Banking web and mobile apps for Itaú, Bancolombia and BCR.',
+      fr: 'Applications bancaires web et mobiles pour Itaú, Bancolombia et BCR.',
+      es: 'Apps bancarias web y móviles para Itaú, Bancolombia y BCR.',
+    },
   },
 ];
+
+export interface SkillGroup { title: Text; items: string }
 
 export const SKILLS: SkillGroup[] = [
-  {
-    title: { en: 'Angular & front-end', fr: 'Angular et front-end', es: 'Angular y front-end' },
-    items: ['Angular (AngularJS → latest)', 'TypeScript', 'Signals', 'NgRx', 'RxJS', 'Nx', 'Angular Material', 'HTML5', 'SCSS'],
-  },
-  {
-    title: { en: 'Mobile', fr: 'Mobile', es: 'Móvil' },
-    items: ['Ionic', 'Capacitor', 'Cordova', 'iOS & Android hybrid'],
-  },
-  {
-    title: { en: 'Cloud & APIs', fr: 'Infonuagique et API', es: 'Nube y APIs' },
-    items: ['AWS Lambda / serverless', 'REST', 'OpenAPI', 'Node.js', 'Express', 'MySQL'],
-  },
-  {
-    title: { en: 'Security & finance', fr: 'Sécurité et finance', es: 'Seguridad y finanzas' },
-    items: ['OWASP', 'OAuth / JWT', 'Secure coding', 'Payment gateways', 'Banking apps'],
-  },
-  {
-    title: { en: 'Quality & delivery', fr: 'Qualité et livraison', es: 'Calidad y entrega' },
-    items: ['Jest', 'Jasmine / Karma', 'Playwright', 'Cypress', 'Jenkins CI/CD', 'Git', 'Agile / Scrum'],
-  },
-  {
-    title: { en: 'AI tooling', fr: "Outils d'IA", es: 'Herramientas de IA' },
-    items: ['Claude Code', 'GitHub Copilot', 'AI agents'],
-  },
+  { title: same('Angular'), items: 'AngularJS through Angular 20, standalone components, Signals and signal stores, NgRx, RxJS, Nx, Angular Material, TypeScript' },
+  { title: { en: 'Styling', fr: 'Styles', es: 'Estilos' }, items: 'Tailwind CSS, SCSS, atomic design, accessible UI' },
+  { title: { en: 'Mobile', fr: 'Mobile', es: 'Móvil' }, items: 'Ionic, Capacitor, Cordova, hybrid iOS and Android apps' },
+  { title: { en: 'APIs and cloud', fr: 'API et infonuagique', es: 'APIs y nube' }, items: 'REST, OpenAPI, AWS Lambda and serverless APIs, Node.js, Express, MySQL' },
+  { title: { en: 'Security', fr: 'Sécurité', es: 'Seguridad' }, items: 'OWASP, OAuth and JWT, MFA flows, secure coding, payment gateways, financial data' },
+  { title: { en: 'Quality', fr: 'Qualité', es: 'Calidad' }, items: 'Jest, Jasmine, Karma, Playwright, Cypress, SonarQube, axe-core, Jenkins CI/CD' },
+  { title: { en: 'Leadership', fr: 'Leadership', es: 'Liderazgo' }, items: 'Code reviews, mentoring, technical hiring, Agile and Scrum' },
+  { title: { en: 'AI tools', fr: "Outils d'IA", es: 'Herramientas de IA' }, items: 'Claude Code, GitHub Copilot, custom agent skills, MCP integrations, human-in-the-loop workflows' },
 ];
 
-export const CERTS: { name: string; issuer: string; year: string }[] = [
+export const CERTS = [
   { name: 'Claude Code in Action', issuer: 'Anthropic', year: '2026' },
   { name: 'Google AI Professional Certificate', issuer: 'Google', year: '2026' },
 ];
 
 export const EDUCATION = {
-  degree: {
-    en: 'Bachelor of Systems Engineering',
-    fr: 'Baccalauréat en génie des systèmes',
-    es: 'Ingeniería de Sistemas',
-  } as Text,
-  school: 'María Cano University, Colombia · 2014',
+  degree: { en: 'Bachelor of Systems Engineering', fr: 'Baccalauréat en génie des systèmes', es: 'Ingeniería de Sistemas' } as Text,
+  school: 'María Cano University, Colombia, 2014',
   wes: {
-    en: "Evaluated by WES as equivalent to a Canadian bachelor's degree (2026)",
-    fr: "Équivalence d'un baccalauréat canadien reconnue par WES (2026)",
-    es: 'Evaluado por WES como equivalente a un título universitario canadiense (2026)',
+    en: "Evaluated by WES as equivalent to a Canadian bachelor's degree.",
+    fr: "Équivalence d'un baccalauréat canadien reconnue par WES.",
+    es: 'Evaluado por WES como equivalente a un título universitario canadiense.',
   } as Text,
 };
 
-export const LANGUAGES: Text[] = [
-  { en: 'English (professional)', fr: 'Anglais (professionnel)', es: 'Inglés (profesional)' },
-  { en: 'Spanish (native)', fr: 'Espagnol (langue maternelle)', es: 'Español (nativo)' },
-];
+export const LANGUAGES: Text = {
+  en: 'English (professional), Spanish (native)',
+  fr: 'Anglais (professionnel), espagnol (langue maternelle)',
+  es: 'Inglés (profesional), español (nativo)',
+};

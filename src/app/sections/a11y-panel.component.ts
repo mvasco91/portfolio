@@ -3,56 +3,52 @@ import { I18nService } from '../core/i18n.service';
 import { Theme, ThemeService } from '../core/theme.service';
 import { UI } from '../data/portfolio.data';
 
-/** Header button + popover: colour theme (dark / light / high contrast) and reduce motion. */
+/** Display settings: colour theme and reduced motion. */
 @Component({
   selector: 'app-a11y-panel',
   template: `
-    <div class="a11y">
+    <div class="display">
       <button
         type="button"
-        class="icon-btn"
-        [class.is-open]="open()"
+        class="tool"
         (click)="open.update((v) => !v)"
         [attr.aria-expanded]="open()"
-        aria-controls="a11y-panel"
+        aria-controls="display-panel"
         [attr.aria-label]="i18n.t(ui.a11y.open)"
         [attr.title]="i18n.t(ui.a11y.open)"
       >
-        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-          <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2" />
-          <path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" />
+        <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true">
+          <circle cx="10" cy="10" r="7.25" fill="none" stroke="currentColor" stroke-width="1.5" />
+          <path d="M10 2.75a7.25 7.25 0 0 1 0 14.5z" fill="currentColor" />
         </svg>
       </button>
 
       @if (open()) {
-        <div class="a11y__panel" id="a11y-panel" role="dialog" [attr.aria-label]="i18n.t(ui.a11y.title)">
-          <p class="a11y__label" id="a11y-theme">{{ i18n.t(ui.a11y.theme) }}</p>
-          <div class="a11y__themes" role="radiogroup" aria-labelledby="a11y-theme">
+        <div class="display__panel" id="display-panel" role="dialog" [attr.aria-label]="i18n.t(ui.a11y.title)">
+          <p class="display__label" id="display-theme">{{ i18n.t(ui.a11y.theme) }}</p>
+          <div class="display__themes" role="radiogroup" aria-labelledby="display-theme">
             @for (t of theme.themes; track t) {
               <button
                 type="button"
                 role="radio"
-                class="a11y__theme"
-                [class.is-active]="theme.theme() === t"
+                class="display__theme"
                 [attr.aria-checked]="theme.theme() === t"
                 [attr.data-swatch]="t"
                 (click)="theme.theme.set(t)"
               >
-                <span class="a11y__swatch" aria-hidden="true"></span>
-                {{ i18n.t(label(t)) }}
+                <span class="display__swatch" aria-hidden="true"></span>{{ i18n.t(label(t)) }}
               </button>
             }
           </div>
-
           <button
             type="button"
             role="switch"
-            class="a11y__switch"
+            class="display__switch"
             [attr.aria-checked]="theme.motion() === 'reduced'"
             (click)="theme.toggleMotion()"
           >
             <span>{{ i18n.t(ui.a11y.motion) }}</span>
-            <span class="a11y__track" aria-hidden="true"><span class="a11y__thumb"></span></span>
+            <span class="display__track" aria-hidden="true"><span></span></span>
           </button>
         </div>
       }
@@ -72,16 +68,13 @@ export class A11yPanelComponent {
 
   @HostListener('document:keydown.escape')
   onEscape(): void {
-    if (this.open()) {
-      this.open.set(false);
-      (this.host.nativeElement as HTMLElement).querySelector<HTMLButtonElement>('.icon-btn')?.focus();
-    }
+    if (!this.open()) return;
+    this.open.set(false);
+    (this.host.nativeElement as HTMLElement).querySelector<HTMLButtonElement>('.tool')?.focus();
   }
 
   @HostListener('document:click', ['$event'])
   onDocClick(event: MouseEvent): void {
-    if (this.open() && !(this.host.nativeElement as HTMLElement).contains(event.target as Node)) {
-      this.open.set(false);
-    }
+    if (this.open() && !(this.host.nativeElement as HTMLElement).contains(event.target as Node)) this.open.set(false);
   }
 }
