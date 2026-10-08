@@ -113,6 +113,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 
 /* Particle layer sits behind everything; content scrolls over it. */
 .particles { position: fixed; inset: 0; width: 100vw; height: 100vh; height: 100lvh; z-index: 0; pointer-events: none; display: block; }
+.particles.is-off { display: none; }
 main, .masthead, .footer { position: relative; z-index: 1; }
 
 .visually-hidden {
@@ -210,7 +211,10 @@ main, .masthead, .footer { position: relative; z-index: 1; }
   display: flex; flex-direction: column; justify-content: center;
   padding-top: 72px; padding-bottom: 72px;
 }
-.hero__name { font-size: 1rem; color: var(--green); margin-bottom: 20px; font-weight: 500; }
+.hero__name {
+  font: 600 clamp(1.6rem, 1rem + 2.2vw, 2.8rem) / 1.1 var(--sans);
+  letter-spacing: -0.015em; color: var(--green); margin-bottom: 22px;
+}
 .hero__headline {
   font: 420 var(--step-4) / 1.02 var(--serif);
   letter-spacing: -0.025em;
